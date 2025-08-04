@@ -17,9 +17,9 @@ pub fn Echo() -> Element {
 
         div {
             id: "echo",
-            h4 { "ServerFn Echo" }
+            h4 { "Search" }
             input {
-                placeholder: "Type here to echo...",
+                placeholder: "Type here to search...",
                 // `oninput` is an event handler that will run when the input changes. It can return either nothing or a future
                 // that will be run when the event runs.
                 oninput:  move |event| async move {

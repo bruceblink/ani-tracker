@@ -2,7 +2,7 @@
 //! enum will render one of these components.
 //!
 //!
-//! The [`Home`] and [`Blog`] components will be rendered when the current route is [`Route::Home`] or [`Route::Blog`] respectively.
+//! The [`Home`] and [`Favorite`] components will be rendered when the current route is [`Route::Home`] or [`Route::Blog`] respectively.
 //!
 //!
 //! The [`Navbar`] component will be rendered on all pages of our app since every page is under the layout. The layout defines
@@ -11,8 +11,8 @@
 mod home;
 pub use home::Home;
 
-mod blog;
-pub use blog::Blog;
+mod favorite;
+pub use favorite::Favorite;
 
 mod navbar;
 pub use navbar::Navbar;
