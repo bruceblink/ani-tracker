@@ -1,6 +1,6 @@
-use crate::components::{Search, AniList};
 use dioxus::prelude::*;
-use crate::components::ani_info::AniData;
+use crate::components::ani_info::{AniData, AniList};
+use crate::components::Search;
 use crate::components::search::search_server;
 
 

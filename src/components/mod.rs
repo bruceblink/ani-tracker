@@ -3,7 +3,6 @@
 //! component and an Echo component for fullstack apps to be used in our app.
 
 pub mod ani_info;
-pub use ani_info::AniList;
 
 pub mod search;
 mod ani_item;
