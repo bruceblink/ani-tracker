@@ -7,4 +7,11 @@ pub mod ani_info;
 pub mod search;
 mod ani_item;
 
+use serde::{Deserialize, Serialize};
 pub use search::Search;
+
+#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
+pub struct AniData {
+    pub title: String,
+    pub url:   String,
+}

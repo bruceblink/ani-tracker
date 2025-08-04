@@ -1,13 +1,6 @@
 use dioxus::prelude::*;
-use dioxus::prelude::server_fn::serde::Deserialize;
-use serde::Serialize;
 use crate::components::ani_item::AniItem;
-
-#[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
-pub struct AniData {
-    pub title: String,
-    pub url:   String,
-}
+pub(crate) use crate::components::AniData;
 
 #[component]
 pub fn AniList(items: Vec<AniData>) -> Element {
