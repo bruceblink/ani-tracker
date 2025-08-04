@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
-const ECHO_CSS: Asset = asset!("/assets/styling/echo.css");
+const ECHO_CSS: Asset = asset!("/assets/styling/search.css");
 
-/// Echo component that demonstrates fullstack server functions.
+/// Search component that demonstrates fullstack server functions.
 #[component]
-pub fn Echo() -> Element {
+pub fn Search() -> Element {
     // use_signal is a hook. Hooks in dioxus must be run in a consistent order every time the component is rendered.
     // That means they can't be run inside other hooks, async blocks, if statements, or loops.
     //
@@ -16,7 +16,7 @@ pub fn Echo() -> Element {
         document::Link { rel: "stylesheet", href: ECHO_CSS }
 
         div {
-            id: "echo",
+            id: "search",
             h4 { "Search" }
             input {
                 placeholder: "Type here to search...",
@@ -25,7 +25,7 @@ pub fn Echo() -> Element {
                 oninput:  move |event| async move {
                     // When we call the echo_server function from the client, it will fire a request to the server and return
                     // the response. It handles serialization and deserialization of the request and response for us.
-                    let data = echo_server(event.value()).await.unwrap();
+                    let data = search_server(event.value()).await.unwrap();
 
                     // After we have the data from the server, we can set the state of the signal to the new value.
                     // Since we read the `response` signal later in this component, the component will rerun.
@@ -53,7 +53,7 @@ pub fn Echo() -> Element {
 // When the server function is called from the client, it will just serialize the arguments, call the API, and deserialize the
 // response.
 #[server]
-async fn echo_server(input: String) -> Result<String, ServerFnError> {
+async fn search_server(input: String) -> Result<String, ServerFnError> {
     // The body of server function like this comment are only included on the server. If you have any server-only logic like
     // database queries, you can put it here. Any imports for the server function should either be imported inside the function
     // or imported under a `#[cfg(feature = "server")]` block.
