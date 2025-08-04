@@ -1,7 +1,7 @@
 use crate::Route;
 use dioxus::prelude::*;
 
-const BLOG_CSS: Asset = asset!("/assets/styling/blog.css");
+const HIST_CSS: Asset = asset!("/assets/styling/history.css");
 
 /// The Blog page component that will be rendered when the current route is `[Route::Blog]`
 ///
@@ -10,7 +10,7 @@ const BLOG_CSS: Asset = asset!("/assets/styling/blog.css");
 #[component]
 pub fn History(id: i32) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: BLOG_CSS }
+        document::Link { rel: "stylesheet", href: HIST_CSS }
 
         div {
             id: "history",
