@@ -23,6 +23,11 @@ pub fn Navbar() -> Element {
                 to: Route::Favorite { id: 1 },
                 "Favorite"
             }
+            
+            Link {
+                to: Route::History { id: 1 },
+                "History"
+            }
         }
 
         // The `Outlet` component is used to render the next component inside the layout. In this case, it will render either

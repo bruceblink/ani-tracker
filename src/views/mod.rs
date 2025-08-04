@@ -14,5 +14,9 @@ pub use home::Home;
 mod favorite;
 pub use favorite::Favorite;
 
+mod history;
+pub use history::History;
+
+
 mod navbar;
 pub use navbar::Navbar;
