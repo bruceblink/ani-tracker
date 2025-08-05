@@ -20,6 +20,21 @@ pub struct AniProps {
 
 #[component]
 pub fn AniItem(props: AniProps) -> Element {
+    let info_props = props.clone();
+    rsx! {
+        div {
+            class: "ani-item",
+            id: format!("ani-item-{}", props.title),
+            style: "border:1px solid #ccc; padding:10px; margin-bottom:10px; display:flex; align-items:center;",
+            // 直接把整个 props（按值）展开给 AniInfo
+            AniInfo { ..info_props }
+        }
+    }
+}
+
+
+#[component]
+pub fn AniInfo(props: AniProps) -> Element {
     let AniProps {
         title,
         detail_url,
@@ -29,26 +44,19 @@ pub fn AniItem(props: AniProps) -> Element {
         update_time,
         platform,
     } = props;
-    
+
     rsx! {
         div {
-            class: "ani-item",
-            id: "ani-item-{title}",
-            style: "border: 1px solid #ccc; 
-                    padding: 10px; 
-                    margin-bottom: 10px; 
-                    display: flex;
-                    align-items: center;",
-            
-            //a { href: "{detail_url}", "{title}" }
-            img {
-                src: "{image_url}",
-                alt: "{title}",
-                style: "width: 92.7px; height: 150px; object-fit: cover;",
-                class: "ani-item-image"
-            }
-            h3 { "{title}" }
-        }
+            class: "ani-info",
+            id: "ani-info-{title}",
+            style: "padding: 10px; margin-bottom: 10px;",
 
+            h3 { "{title}" }
+            p { "Update Count: {update_count}" }
+            p { "Update Info: {update_info}" }
+            p { "Update Time: {update_time}" }
+            p { "Platform: {platform}" }
+            a { href: "{detail_url}", "More Details" }
+        }
     }
 }
