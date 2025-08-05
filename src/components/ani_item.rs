@@ -25,7 +25,7 @@ pub fn AniItem(props: AniProps) -> Element {
         div {
             class: "ani-item",
             id: format!("ani-item-{}", props.title),
-            style: "border:1px solid #ccc; padding:10px; margin-bottom:10px; display:flex; align-items:center;",
+
             // 直接把整个 props（按值）展开给 AniInfo
             AniInfo { ..info_props }
         }
@@ -35,28 +35,105 @@ pub fn AniItem(props: AniProps) -> Element {
 
 #[component]
 pub fn AniInfo(props: AniProps) -> Element {
-    let AniProps {
-        title,
-        detail_url,
-        update_count,
-        update_info,
-        image_url,
-        update_time,
-        platform,
-    } = props;
 
     rsx! {
         div {
             class: "ani-info",
-            id: "ani-info-{title}",
-            style: "padding: 10px; margin-bottom: 10px;",
+            style: "border:1px solid #ccc;
+                    padding:10px;
+                    margin-bottom:10px;
+                    display: flex;
+                    flexDirection: row;
+                    alignItems: flex-start;
+                    gap: 16px;
+                    padding: 32px;
+                    width: 90%;
+                    height: 216.3px;",
+            div {
+                style: "position: relative; flexShrink: 0;",
+                a {
+                    href: {props.detail_url.clone()},
+                    target: "_blank",
+                    style: "display: block;
+                            width: 92.8px;
+                            height: 150px;
+                            borderRadius: 8px;
+                            overflow: hidden;
+                            boxShadow: 0 2px 4px rgba(0,0,0,0.1);",
 
-            h3 { "{title}" }
-            p { "Update Count: {update_count}" }
-            p { "Update Info: {update_info}" }
-            p { "Update Time: {update_time}" }
-            p { "Platform: {platform}" }
-            a { href: "{detail_url}", "More Details" }
+                    AniImage {
+                        image_url: props.image_url.clone(),
+                        title: props.title.clone(),
+                    }
+                }
+            }
+            // 动漫信息部分
+            div {
+                style: "flex: 1; display: flex; flexDirection: column; justifyContent: space-between;",
+                h3 {
+                    style: "margin: 0 0 8px;
+                            fontSize: 1.1rem;
+                            fontWeight: 600;
+                            color: #333;
+                            maxWidth: 100%;
+                            wordWrap: break-word;
+                            display: -webkit-box;
+                            WebkitLineClamp: 2;
+                            WebkitBoxOrient: vertical;
+                            overflow: hidden;
+                            lineHeight: 1.4;",
+                    {props.title}
+                }
+                div {
+                    style: "fontSize: 0.9rem;
+                            color: #666;
+                            marginBottom: 4px;
+                            width: 100%;",
+                    {props.update_time} "更新"
+                }
+                div {
+                    style: "fontSize: 0.9rem;
+                            color: #666;
+                            marginBottom: 8px;
+                            width: 100%;",
+                    if !props.update_count.is_empty() {
+                        "更新至第" {props.update_count} "集",
+                    } else {
+                        "暂无更新信息"
+                    }
+                }
+                div {
+                    style: "fontSize: 1rem;
+                            color: #888;
+                            alignItems: center;
+                            gap: 8;",
+                    span {
+                        style: "padding: 2px 8px;
+                                background: #f5f5f5;
+                                borderRadius: 4px;",
+                        {props.platform}
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+
+#[component]
+pub fn AniImage(image_url: String, title: String) -> Element {
+
+    rsx! {
+        img {
+            src: "{image_url}",
+            alt: "{title}",
+            style: "display: block;
+                    width: 92.8px;
+                    height: 150px;
+                    borderRadius: 8px;
+                    overflow: hidden,
+                    boxShadow: 0 2px 4px rgba(0,0,0,0.1);"
         }
     }
 }
