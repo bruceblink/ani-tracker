@@ -3,7 +3,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 50px;
-  background-color: #1e222d;
+  background-color: #dcdcdc;
   padding: 20px;
   border-radius: 10px;
 }
@@ -17,7 +17,7 @@
   border: none;
   border-bottom: 1px white solid;
   background-color: transparent;
-  color: #ffffff;
+  color: #000;
   transition: border-bottom-color 0.2s ease;
   outline: none;
   display: block;
