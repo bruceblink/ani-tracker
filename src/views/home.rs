@@ -25,7 +25,7 @@ pub fn Home() -> Element {
 
         div {
             class: "App",
-            style: "width: 100%; margin: 0 auto; padding: 0 24px; boxSizing: border-box;",
+            style: "width: 100%; min-width: 500px; margin: 0 auto;",
             
             Search {
                 on_search: move |new_q| query.set(new_q),

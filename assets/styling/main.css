@@ -9,11 +9,11 @@ a:hover {
 }
 
 body {
-    margin: 0;
-    min-width: 320px;
+    margin: 0 auto;
     min-height: 100vh;
     /* 关键修复：始终显示滚动条防止跳动 */
     overflow-y: scroll;
+    overflow-x: hidden;
     background-color: #0f1116;
     color: #ffffff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
