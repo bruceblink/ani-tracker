@@ -2,7 +2,7 @@
 //! They can be used to defined common UI elements like buttons, forms, and modals. In this template, we define a Hero
 //! component and an Echo component for fullstack apps to be used in our app.
 
-pub mod ani_info;
+pub mod ani_list;
 
 pub mod search;
 mod ani_item;
@@ -13,5 +13,10 @@ pub use search::Search;
 #[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
 pub struct AniData {
     pub title: String,
-    pub url:   String,
+    pub update_count: String,
+    pub update_info: String,
+    pub image_url: String,
+    pub detail_url: String,
+    pub update_time: String,
+    pub platform: String,
 }

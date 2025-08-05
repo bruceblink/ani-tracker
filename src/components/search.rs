@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use crate::components::ani_info::AniData;
+use crate::components::ani_list::AniData;
 const ECHO_CSS: Asset = asset!("/assets/styling/search.css");
 
 
@@ -47,12 +47,51 @@ pub async fn search_server(input: String) -> Result<Vec<AniData>, ServerFnError>
     // database queries, you can put it here. Any imports for the server function should either be imported inside the function
     // or imported under a `#[cfg(feature = "server")]` block.
     let items = vec![
-        AniData { title: "📚 Learn Dioxus".into(), url: "https://dioxuslabs.com/learn/0.6/".into() },
-        AniData { title: "🚀 Awesome Dioxus".into(), url: "https://dioxuslabs.com/awesome".into() },
-        AniData { title: "📡 Community Libraries".into(), url: "https://github.com/dioxus-community/".into() },
-        AniData { title: "⚙️ Dioxus Development Kit".into(), url: "https://github.com/DioxusLabs/sdk".into() },
-        AniData { title: "💫 VSCode Extension".into(), url: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus".into() },
-        AniData { title: "👋 Community Discord".into(), url: "https://discord.gg/XgGxMSkvUM".into() },
+        AniData {
+            detail_url: "https://mikanani.me/Home/Bangumi/3582".into(),
+            image_url: "https://mikanani.me/images/Bangumi/202504/f86c46e8.jpg?width=400&height=400&format=webp".into(),
+            platform: "mikanani".into(),
+            title: "安妮·雪莉".into(),
+            update_count: "".into(),
+            update_info: "2025/07/12 更新".into(),
+            update_time: "2025/07/12".into()
+        },
+        AniData {
+            detail_url: "https://mikanani.me/Home/Bangumi/3637".into(),
+            image_url: "https://mikanani.me/images/Bangumi/202504/060a6b96.jpg?width=400&height=400&format=webp".into(),
+            platform: "mikanani".into(),
+            title: "真･武士传 剑勇传说".into(),
+            update_count: "".into(),
+            update_info: "2025/07/12 更新".into(),
+            update_time: "2025/07/12".into()
+        },
+        AniData {
+            detail_url: "https://mikanani.me/Home/Bangumi/3666".into(),
+            image_url: "https://mikanani.me/images/Bangumi/202507/2bdcc7f0.jpg?width=400&height=400&format=webp".into(),
+            platform: "mikanani".into(),
+            title: "更衣人偶坠入爱河 第二季".into(),
+            update_count: "".into(),
+            update_info: "2025/07/12 更新".into(),
+            update_time: "2025/07/12".into()
+        },
+        AniData {
+            detail_url: "https://mikanani.me/Home/Bangumi/3672".into(),
+            image_url: "https://mikanani.me/images/Bangumi/202507/f9163e66.jpg?width=400&height=400&format=webp".into(),
+            platform: "mikanani".into(),
+            title: "怪兽8号 第二季".into(),
+            update_count: "".into(),
+            update_info: "2025/07/12 更新".into(),
+            update_time: "2025/07/12".into()
+        },
+        AniData {
+            detail_url: "https://mikanani.me/Home/Bangumi/3683".into(),
+            image_url: "https://mikanani.me/images/Bangumi/202507/57ec5a0a.jpg?width=400&height=400&format=webp".into(),
+            platform: "mikanani".into(),
+            title: "和雨和你".into(),
+            update_count: "".into(),
+            update_info: "2025/07/12 更新".into(),
+            update_time: "2025/07/12".into()
+        },
     ];
     let filtered_ani = items.iter()
         .filter(|item| item.title.contains(&input))
