@@ -23,8 +23,10 @@ pub fn Home() -> Element {
     rsx! {
         link { rel: "stylesheet", href: asset!("/assets/styling/search.css") }
 
-        div { id: "app",
-
+        div {
+            class: "App",
+            style: "width: 100%; margin: 0 auto; padding: 0 24px; boxSizing: border-box;",
+            
             Search {
                 on_search: move |new_q| query.set(new_q),
             }

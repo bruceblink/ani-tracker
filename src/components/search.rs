@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use crate::components::ani_list::AniData;
-const ECHO_CSS: Asset = asset!("/assets/styling/search.css");
+const SEARCH_CSS: Asset = asset!("/assets/styling/search.css");
 
 
 #[derive(Props, PartialEq)]
@@ -20,7 +20,7 @@ pub fn Search(props: SearchProps) -> Element {
     let SearchProps { on_search } = props;
 
     rsx! {
-        document::Link { rel: "stylesheet", href: ECHO_CSS }
+        document::Link { rel: "stylesheet", href: SEARCH_CSS }
 
         div {
             id: "search",
