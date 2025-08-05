@@ -1,0 +1,40 @@
+.ani-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: min(24px, 2vw);
+    padding: 80px 0 24px;
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+    min-width: 580px;
+}
+
+/* 小屏幕时纵向布局 */
+@media (max-width: 720px) {
+    .ani-list {
+        flex-direction: column;
+    }
+}
+
+/* 中等屏幕时横向两列 */
+@media (min-width: 720px) and (max-width: 1024px) {
+    .ani-list {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .ani-list > div {
+        width: clamp(200px, 45vw, 300px);
+    }
+}
+
+/* 大屏幕时横向四列 */
+@media (min-width: 1025px) {
+    .ani-list {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .ani-list > div {
+        width: clamp(240px, 22vw, 360px);
+    }
+}
