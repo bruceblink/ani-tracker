@@ -24,7 +24,11 @@ pub fn Search(props: SearchProps) -> Element {
 
         div {
             id: "search",
-            h4 { "Search" }
+            h4 {
+                class: "search-title",
+                style: "color: #333; font-weight: bold; margin-bottom: 10px; text-align: center;",
+                "Search" 
+            }
             input {
                 placeholder: "Type here to search...",
                 // `oninput` is an event handler that will run when the input changes. It can return either nothing or a future
