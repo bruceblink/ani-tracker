@@ -15,7 +15,7 @@ pub fn AniList(items: Vec<AniData>) -> Element {
                     key:   {data.title},
                     style: "width: calc(clamp(360px, calc(90vw/4 - 24px), 360px));
                             height: calc(calc(clamp(360px, calc(90vw/4 - 24px), 360px) * 0.618));
-                            flexShrink: 0;",
+                            flex-shrink: 0;",
                     AniItem {
                         title: {data.title.clone()},
                         update_count: {data.update_count.clone()},
