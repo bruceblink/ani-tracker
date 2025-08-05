@@ -45,7 +45,9 @@ pub fn AniInfo(props: AniProps) -> Element {
                     gap: 16px;
                     padding: 32px;
                     width: 100%;
-                    height: 216.3px;",
+                    min-height: 0;
+                    overflow: hidden;
+                    flex-shrink: 1;",
             div {
                 style: "position: relative; flex-shrink: 0;",
                 a {
