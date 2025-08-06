@@ -60,11 +60,14 @@
 
 /* 移动端样式 */
 @media (max-width: 768px) {
+  /* 展示汉堡按钮 */
   .nav-toggle-label {
     display: block;
   }
 
+  /* 默认隐藏菜单项 */
   .nav-links {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -74,13 +77,10 @@
     align-items: flex-start;
     padding: 1rem;
     gap: 1rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
   }
 
-  /* 选中时展开 */
+  /* 选中时显示 */
   .nav-toggle:checked + .nav-toggle-label + .nav-links {
-    max-height: 500px;
+    display: flex;
   }
 }
