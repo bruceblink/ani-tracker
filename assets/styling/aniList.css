@@ -29,11 +29,11 @@
     }
 }
 
-/* 大屏幕时横向四列 */
+/* 大屏幕时横向三、四列等 */
 @media (min-width: 1025px) {
     .ani-list {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center; /* 末尾那一行不满时也是居中 */
     }
     .ani-list > div {
         width: clamp(240px, 22vw, 360px);
