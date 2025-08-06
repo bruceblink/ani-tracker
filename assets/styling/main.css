@@ -1,69 +1,118 @@
+:root {
+    /* 基础尺寸和间距 */
+    --navbar-height: 3.5rem;
+    --toggle-size: 2rem;
+
+    /* 浅色主题变量 */
+    --body-bg: #f0f2f5;
+    --text-color: #333;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --link-color: #333;
+    --link-hover: #007bff;
+    --search-bg: #e9ecef;
+    --search-border: #ced4da;
+    --search-focus-border: #80bdff;
+    --search-text: #495057;
+    --search-placeholder: rgba(73, 80, 87, 0.7);
+    --ani-item-bg: white;
+    --ani-item-border: #eee;
+    --ani-item-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --ani-item-hover-shadow:
+            0 16px 32px rgba(0, 0, 0, 0.12),
+            0 6px 16px rgba(0, 0, 0, 0.08),
+            0 0 0 1px rgba(0, 0, 0, 0.04);
+    --ani-item-hover-border: #61dafb;
+    --ani-info-title-color: #333;
+    --ani-info-text-color: #666;
+    --ani-info-platform-bg: #f5f5f5;
+    --ani-info-platform-text: #888;
+    --no-results-color: #333;
+    --button-bg: #f9f9f9;
+    --button-text: #1a1a1a;
+    --button-border: #646cff;
+    --button-hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 深色主题变量 */
+[data-theme='dark'] {
+    --body-bg: #1a1b1e;
+    --text-color: #e0e0e0;
+    --header-bg: rgba(29, 31, 36, 0.95);
+    --link-color: #e0e0e0;
+    --link-hover: #7b96ff;
+    --search-bg: #2d2e33;
+    --search-border: #444;
+    --search-focus-border: #7b96ff;
+    --search-text: #e0e0e0;
+    --search-placeholder: rgba(224, 224, 224, 0.7);
+    --ani-item-bg: #2d2e33;
+    --ani-item-border: #444;
+    --ani-item-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --ani-item-hover-shadow:
+            0 16px 32px rgba(0, 0, 0, 0.3),
+            0 6px 16px rgba(0, 0, 0, 0.2),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+    --ani-item-hover-border: #7b96ff;
+    --ani-info-title-color: #e0e0e0;
+    --ani-info-text-color: #b0b0b0;
+    --ani-info-platform-bg: #444;
+    --ani-info-platform-text: #ccc;
+    --no-results-color: #ccc;
+    --button-bg: #1a1a1a;
+    --button-text: #ffffff;
+    --button-border: #646cff;
+    --button-hover-bg: rgba(255, 255, 255, 0.1);
+}
+
 a {
     font-weight: 500;
-    color: #646cff;
+    color: var(--link-color);
     text-decoration: inherit;
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #535bf2;
+    color: var(--link-hover);
 }
 
 body {
     margin: 0 auto;
     min-height: 100vh;
     overflow-x: hidden;
-    background-color: #F6F7F8FF;
-    color: #ffffff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1 {
     font-size: 3.2em;
-    color: black;
+    color: var(--text-color);
     line-height: 1.1;
+    transition: color 0.3s ease;
 }
 
 p {
     font-size: 1.2em;
     line-height: 1.6;
-    color: #333;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 button {
     border-radius: 8px;
     border: 1px solid transparent;
-    /*padding: 0.6em 1.2em;*/
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    background-color: #1a1a1a;
+    background-color: var(--button-bg);
+    color: var(--button-text);
     cursor: pointer;
-    transition: border-color 0.25s;
+    transition: border-color 0.25s, background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
-    border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-    /*outline: 2px solid #007bff; !* 红色轮廓，宽度2px *!*/
-    /*outline-offset: 2px;  可选：设置轮廓与元素边缘的偏移 */
-}
-
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
-
-    a:hover {
-        color: #747bff;
-    }
-
-    button {
-        background-color: #f9f9f9;
-    }
+    border-color: var(--button-border);
 }
 
 .spin {
