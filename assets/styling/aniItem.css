@@ -4,14 +4,16 @@
     gap: 16px;
     position: relative;
     padding: 16px;
-    background: white;
+    /* 使用变量 */
+    background: var(--ani-item-bg);
     border-radius: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eee;
+    box-shadow: var(--ani-item-shadow);
+    border: 1px solid var(--ani-item-border);
     transition:
             transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
             box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-            border-color 0.3s ease;
+            border-color 0.3s ease,
+            background-color 0.3s ease; /* 添加 background-color 过渡 */
     cursor: default;
     width: 100%;
     height: 100%;
@@ -21,10 +23,83 @@
 
 /* 悬浮状态（可选：如果你用 CSS 处理 hover 效果） */
 .ani-item:hover {
-    box-shadow:
-            0 16px 32px rgba(0, 0, 0, 0.12),
-            0 6px 16px rgba(0, 0, 0, 0.08),
-            0 0 0 1px rgba(0, 0, 0, 0.04);
-    border: 1px solid #61dafb;
+    /* 使用变量 */
+    box-shadow: var(--ani-item-hover-shadow);
+    border: 1px solid var(--ani-item-hover-border);
     transform: translateY(-6px) scale(1.02);
+}
+
+/* ani-info 组件样式 */
+.ani-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px;
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+    flex-shrink: 1;
+}
+
+.ani-info-image-container {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ani-info-image-container a {
+    display: block;
+    width: 93px;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ani-info-text-container {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.ani-info-title {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ani-info-title-color); /* 使用变量 */
+    max-width: 100%;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.ani-info-update-time,
+.ani-info-update-count {
+    font-size: 0.9rem;
+    color: var(--ani-info-text-color); /* 使用变量 */
+    margin-bottom: 4px;
+    width: 100%;
+    transition: color 0.3s ease;
+}
+
+.ani-info-platform {
+    font-size: 0.85rem;
+    color: var(--ani-info-platform-text); /* 使用变量 */
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.ani-info-platform-tag {
+    padding: 2px 8px;
+    background: var(--ani-info-platform-bg); /* 使用变量 */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }

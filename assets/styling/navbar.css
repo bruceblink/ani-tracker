@@ -15,6 +15,18 @@
   --search-text: #495057;
   --button-hover-bg: rgba(0, 0, 0, 0.05);
   --search-placeholder: rgba(73, 80, 87, 0.7);
+  --ani-item-bg: white;
+  --ani-item-border: #eee;
+  --ani-item-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --ani-item-hover-shadow:
+          0 16px 32px rgba(0, 0, 0, 0.12),
+          0 6px 16px rgba(0, 0, 0, 0.08),
+          0 0 0 1px rgba(0, 0, 0, 0.04);
+  --ani-item-hover-border: #61dafb;
+  --ani-info-title-color: #333;
+  --ani-info-text-color: #666;
+  --ani-info-platform-bg: #f5f5f5;
+  --ani-info-platform-text: #888;
 }
 
 /* 深色主题变量 */
@@ -30,6 +42,18 @@
   --search-text: #e0e0e0;
   --button-hover-bg: rgba(255, 255, 255, 0.1);
   --search-placeholder: rgba(224, 224, 224, 0.7);
+  --ani-item-bg: #2d2e33;
+  --ani-item-border: #444;
+  --ani-item-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --ani-item-hover-shadow:
+          0 16px 32px rgba(0, 0, 0, 0.3),
+          0 6px 16px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(255, 255, 255, 0.1);
+  --ani-item-hover-border: #7b96ff;
+  --ani-info-title-color: #e0e0e0;
+  --ani-info-text-color: #b0b0b0;
+  --ani-info-platform-bg: #444;
+  --ani-info-platform-text: #ccc;
 }
 
 /* 基础样式 */
