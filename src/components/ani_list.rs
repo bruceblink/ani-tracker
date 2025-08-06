@@ -12,7 +12,7 @@ pub fn AniList(items: Vec<AniData>) -> Element {
                 // 使用 for 循环渲染列表项
             for data in items.iter() {
                 div {
-                    key:   {data.title},
+                    key:   {data.title.clone()},
                     style: "width: calc(clamp(360px, calc(90vw/4 - 24px), 360px));
                             height: calc(calc(clamp(360px, calc(90vw/4 - 24px), 360px) * 0.618));
                             flex-shrink: 0;",
