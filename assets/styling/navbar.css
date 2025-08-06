@@ -21,7 +21,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
   height: 100%;
   padding: 0 1rem;
   margin: 0 auto;
@@ -31,7 +30,16 @@
 .nav-left {
   display: flex;
   align-items: center;
-  position: relative;
+  gap: 1rem;
+  flex-shrink: 0; /* 防止缩小 */
+}
+
+/* 右侧区域：搜索栏始终显示 */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0; /* 防止缩小 */
 }
 
 /* 汉堡开关隐藏原生 */
@@ -68,13 +76,6 @@
 
 .nav-collapse a:hover {
   color: var(--link-hover);
-}
-
-/* 右侧区域：搜索栏始终显示 */
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
 }
 
 .search {
