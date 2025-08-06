@@ -41,10 +41,10 @@ pub fn Navbar(props: NavbarProps) -> Element {
                     Link { to: Route::Home {}, "Home" }
                     Link { to: Route::Favorite { id: 1 }, "Favorite" }
                     Link { to: Route::History { id: 1 }, "History" }
-                    
-                    // 搜索按钮放在最后，并靠右
-                    Search {
-                        on_search: move |query| props.on_search.call(query),
+                    div { class: "search",
+                        Search {
+                            on_search: move |q| props.on_search.call(q),
+                        }
                     }
                 }
             }
