@@ -1,4 +1,5 @@
 :root {
+  --navbar-height: 3.5rem;
   --header-bg: rgba(40, 44, 52, 0.95);
   --link-color: #fff;
   --link-hover: #61dafb;
@@ -9,6 +10,7 @@
   position: fixed;
   top: 0;
   width: 100%;
+  height: var(--navbar-height);  /* 从变量读取 */
   background: var(--header-bg);
   padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -20,6 +22,7 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
+  height: 100%; /* 填充整个 header */
   margin: 0 auto;
 }
 
