@@ -6,6 +6,7 @@ pub mod ani_list;
 
 pub mod search;
 mod ani_item;
+pub mod theme;
 
 use serde::{Deserialize, Serialize};
 pub use search::Search;

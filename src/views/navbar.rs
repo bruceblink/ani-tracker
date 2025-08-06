@@ -1,3 +1,4 @@
+use crate::components::theme::ThemeToggle;
 use crate::Route;
 use dioxus::prelude::*;
 use crate::components::{Search};
@@ -54,7 +55,7 @@ pub fn Navbar(props: NavbarProps) -> Element {
                         }
                     }
                     // Theme toggle button placeholder
-                    // button { class: "theme-toggle", "🌓" }
+                    ThemeToggle{}
                 }
             }
         }
