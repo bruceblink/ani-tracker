@@ -23,13 +23,10 @@ pub fn Search(props: SearchProps) -> Element {
         document::Link { rel: "stylesheet", href: SEARCH_CSS }
 
         div {
-            id: "search",
-            h4 {
-                class: "search-title",
-                style: "color: #333; font-weight: bold; margin-bottom: 10px; text-align: center;",
-                "Search" 
-            }
+            class: "search-container",
             input {
+                class: "search-input",
+                r#type: "text",
                 placeholder: "Type here to search...",
                 // `oninput` is an event handler that will run when the input changes. It can return either nothing or a future
                 // that will be run when the event runs.
