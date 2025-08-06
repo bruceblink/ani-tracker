@@ -17,13 +17,13 @@ pub fn AniList(items: Vec<AniData>) -> Element {
                             height: calc(calc(clamp(360px, calc(90vw/4 - 24px), 360px) * 0.618));
                             flex-shrink: 0;",
                     AniItem {
-                        title: {data.title.clone()},
-                        update_count: {data.update_count.clone()},
-                        detail_url:   {data.detail_url.clone()},
-                        update_info:  {data.update_info.clone()},
-                        image_url:    {data.image_url.clone()},
-                        update_time:  {data.update_time.clone()},
-                        platform:     {data.platform.clone()},
+                        title: data.title.clone(),
+                        update_count: data.update_count.clone(),
+                        detail_url:   data.detail_url.clone(),
+                        update_info:  data.update_info.clone(),
+                        image_url:    data.image_url.clone(),
+                        update_time:  data.update_time.clone(),
+                        platform:     data.platform.clone(),
                     }
                 }
             }
