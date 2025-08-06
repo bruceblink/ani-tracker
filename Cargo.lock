@@ -45,23 +45,15 @@ dependencies = [
 name = "ani-tracker"
 version = "0.1.0"
 dependencies = [
- "anyhow",
  "chrono",
  "dioxus",
  "once_cell",
  "regex",
  "reqwest",
  "serde",
- "serde_json",
  "thiserror 2.0.12",
  "web-sys",
 ]
-
-[[package]]
-name = "anyhow"
-version = "1.0.98"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
 
 [[package]]
 name = "ashpd"
