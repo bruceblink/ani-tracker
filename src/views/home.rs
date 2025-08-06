@@ -21,8 +21,7 @@ pub fn Home() -> Element {
     });
 
     rsx! {
-        link { rel: "stylesheet", href: asset!("/assets/styling/search.css") }
-
+        
         div {
             class: "App",
             style: "width: 100%; min-width: 500px; margin: 0 auto;",
