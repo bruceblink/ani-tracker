@@ -24,28 +24,37 @@ pub fn Navbar(props: NavbarProps) -> Element {
             div {
                 class: "navbar",
 
-                input {
-                    r#type: "checkbox",
-                    id: "nav-toggle",
-                    class: "nav-toggle"
+                div {
+                    class: "nav-left",
+                    input {
+                        id: "nav-toggle",
+                        class: "nav-toggle",
+                        r#type: "checkbox"
+                    }
+                    label {
+                        r#for: "nav-toggle",
+                        class: "nav-toggle-label",
+                        "☰"
+                    }
+
+                    nav { 
+                        class: "nav-collapse",
+                        
+                        Link { to: Route::Home {}, "Home" }
+                        Link { to: Route::Favorite { id: 1 }, "Favorite" }
+                        Link { to: Route::History { id: 1 }, "History" }
+                    }
                 }
 
-                label {
-                    r#for: "nav-toggle",
-                    class: "nav-toggle-label",
-                    "☰"
-                }
-
-                nav {
-                    class: "nav-links",
-                    Link { to: Route::Home {}, "Home" }
-                    Link { to: Route::Favorite { id: 1 }, "Favorite" }
-                    Link { to: Route::History { id: 1 }, "History" }
+                div { 
+                    class: "nav-right",
                     div { class: "search",
                         Search {
                             on_search: move |q| props.on_search.call(q),
                         }
                     }
+                    // Theme toggle button placeholder
+                    // button { class: "theme-toggle", "🌓" }
                 }
             }
         }

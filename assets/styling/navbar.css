@@ -9,10 +9,10 @@
 .header {
   position: fixed;
   top: 0;
-  width: 100%;
-  height: var(--navbar-height);  /* 从变量读取 */
+  left: 0;
+  right: 0;
+  height: var(--navbar-height);
   background: var(--header-bg);
-  padding: 0.5rem 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   z-index: 1000;
 }
@@ -22,11 +22,19 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1200px;
-  height: 100%; /* 填充整个 header */
+  height: 100%;
+  padding: 0 1rem;
   margin: 0 auto;
 }
 
-/* 隐藏原生复选框 */
+/* 左侧区域：菜单 + 汉堡 */
+.nav-left {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* 汉堡开关隐藏原生 */
 .nav-toggle {
   position: absolute;
   width: 0;
@@ -39,40 +47,60 @@
 .nav-toggle-label {
   display: none;
   font-size: var(--toggle-size);
-  cursor: pointer;
   color: var(--link-color);
+  cursor: pointer;
   user-select: none;
+  margin-right: 1rem;
 }
 
-.nav-links {
+/* 折叠菜单项 */
+.nav-collapse {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
 
-.nav-links a,
-.nav-links .search {
+.nav-collapse a {
   color: var(--link-color);
   text-decoration: none;
   font-weight: 500;
 }
 
-.nav-links a:hover {
+.nav-collapse a:hover {
   color: var(--link-hover);
 }
 
+/* 右侧区域：搜索栏始终显示 */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+
+/* 主题按钮等可选添加 */
+.theme-toggle {
+  font-size: 1.2rem;
+  color: var(--link-color);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 /* 移动端样式 */
-@media (max-width: 768px) {
-  /* 展示汉堡按钮 */
+@media (max-width: 720px) {
   .nav-toggle-label {
     display: block;
   }
 
-  /* 默认隐藏菜单项 */
-  .nav-links {
+  .nav-collapse {
     display: none;
     position: absolute;
-    top: 100%;
+    top: var(--navbar-height);
     left: 0;
     right: 0;
     background: var(--header-bg);
@@ -80,10 +108,19 @@
     align-items: flex-start;
     padding: 1rem;
     gap: 1rem;
+    z-index: 999;
   }
 
-  /* 选中时显示 */
-  .nav-toggle:checked + .nav-toggle-label + .nav-links {
+  .nav-toggle:checked + .nav-toggle-label + .nav-collapse {
     display: flex;
+  }
+
+  .nav-collapse a {
+    width: 100%;
+  }
+
+  .nav-right {
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
 }
