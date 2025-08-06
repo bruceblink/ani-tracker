@@ -11,8 +11,6 @@ a:hover {
 body {
     margin: 0 auto;
     min-height: 100vh;
-    /* 关键修复：始终显示滚动条防止跳动 */
-    overflow-y: scroll;
     overflow-x: hidden;
     background-color: #c8c8c8;
     color: #ffffff;
