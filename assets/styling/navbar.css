@@ -27,6 +27,7 @@
   --ani-info-text-color: #666;
   --ani-info-platform-bg: #f5f5f5;
   --ani-info-platform-text: #888;
+  --no-results-color: #333;
 }
 
 /* 深色主题变量 */
@@ -54,6 +55,7 @@
   --ani-info-text-color: #b0b0b0;
   --ani-info-platform-bg: #444;
   --ani-info-platform-text: #ccc;
+  --no-results-color: #ccc;
 }
 
 /* 基础样式 */
@@ -193,4 +195,12 @@ body {
     gap: 0.5rem;
     flex-wrap: wrap;
   }
+}
+
+.no-results {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 1.2rem;
+  color: var(--no-results-color);
+  transition: color 0.3s ease;
 }

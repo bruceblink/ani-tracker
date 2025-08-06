@@ -26,7 +26,6 @@ pub fn Home() -> Element {
             if results().is_empty() {
                 p {
                     class: "no-results",
-                    style: "text-align: center; margin-top: 80px; color: #000;",
                     "No results found."
                 }
             } else {
