@@ -14,19 +14,28 @@ pub fn Navbar() -> Element {
         document::Link { rel: "stylesheet", href: NAVBAR_CSS }
 
         div {
-            id: "navbar",
-            Link {
-                to: Route::Home {},
-                "Home"
-            }
-            Link {
-                to: Route::Favorite { id: 1 },
-                "Favorite"
-            }
-            
-            Link {
-                to: Route::History { id: 1 },
-                "History"
+            class: "header",
+            div {
+                class: "navbar",
+
+                input {
+                    r#type: "checkbox",
+                    id: "nav-toggle",
+                    class: "nav-toggle"
+                }
+
+                label {
+                    r#for: "nav-toggle",
+                    class: "nav-toggle-label",
+                    "☰"
+                }
+
+                nav {
+                    class: "nav-links",
+                    Link { to: Route::Home {}, "Home" }
+                    Link { to: Route::Favorite { id: 1 }, "Favorite" }
+                    Link { to: Route::History { id: 1 }, "History" }
+                }
             }
         }
 
