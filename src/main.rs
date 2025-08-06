@@ -1,3 +1,7 @@
+#![cfg_attr(
+    all(target_os = "windows", not(debug_assertions)),
+    windows_subsystem = "windows"
+)]
 // The dioxus prelude contains a ton of common items used in dioxus apps. It's a good idea to import wherever you
 // need dioxus
 use dioxus::prelude::*;
@@ -19,6 +23,8 @@ const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
 fn main() {
     // The `launch` function is the main entry point for a dioxus app. It takes a component and renders it with the platform feature
     // you have enabled
+    #[cfg(not(feature = "server"))]
+    server_fn::client::set_server_url("https://ani-tracker.fly.dev");
     launch(App);
 }
 
