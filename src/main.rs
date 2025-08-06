@@ -76,12 +76,16 @@ pub fn AppLayout() -> Element {
     let mut query = use_signal(|| "".to_string());
     provide_context(query.clone());  // 👈 将 query提示为全局 提供给子组件
     rsx! {
-        Navbar {
-            on_search: move |s| query.set(s),
+        div {
+            class: "App",
+            Navbar {
+                on_search: move |s| query.set(s),
+            }
+
+            // 包裹所有页面并传递 query
+            Outlet::<Route> {}
         }
 
-        // 包裹所有页面并传递 query
-        Outlet::<Route> {}
     }
 }
 
