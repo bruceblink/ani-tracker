@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+#[cfg(target_family = "wasm")]
 use web_sys::window;
 
 #[derive(Clone, Copy, PartialEq, Debug)]
@@ -27,7 +28,8 @@ fn get_theme_toggle_svg(theme: ThemeMode) -> &'static str {
 #[component]
 pub fn ThemeToggle() -> Element {
     let mut theme_mode = use_signal(|| ThemeMode::Light);
-
+    
+    #[cfg(target_family = "wasm")]
     use_effect(move || {
         if let Some(storage) = window().and_then(|w| w.local_storage().ok().flatten()) {
             if let Some(saved_theme) = storage.get_item("theme").ok().flatten() {
@@ -35,7 +37,8 @@ pub fn ThemeToggle() -> Element {
             }
         }
     });
-
+    
+    #[cfg(target_family = "wasm")]
     use_effect(move || {
         let current_theme_str = match *theme_mode.read() {
             ThemeMode::Light => "light",
