@@ -62,7 +62,7 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: white;
+    background: rgba(30, 32, 40, 0.8);
     padding: 16px;
     border: 1px solid #eee;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
