@@ -1,9 +1,40 @@
 :root {
+  /* 基础尺寸和间距 */
   --navbar-height: 3.5rem;
-  --header-bg: rgba(40, 44, 52, 0.95);
-  --link-color: #fff;
-  --link-hover: #61dafb;
   --toggle-size: 2rem;
+
+  /* 浅色主题变量 */
+  --body-bg: #f0f2f5;
+  --text-color: #333;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --link-color: #333;
+  --link-hover: #007bff;
+  --search-bg: #e9ecef;
+  --search-border: #ced4da;
+  --search-focus-border: #80bdff;
+  --search-text: #495057;
+  --button-hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 深色主题变量 */
+[data-theme='dark'] {
+  --body-bg: #1a1b1e;
+  --text-color: #e0e0e0;
+  --header-bg: rgba(29, 31, 36, 0.95);
+  --link-color: #e0e0e0;
+  --link-hover: #7b96ff;
+  --search-bg: #2d2e33;
+  --search-border: #444;
+  --search-focus-border: #7b96ff;
+  --search-text: #e0e0e0;
+  --button-hover-bg: rgba(255, 255, 255, 0.1);
+}
+
+/* 基础样式 */
+body {
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .header {
@@ -13,8 +44,9 @@
   right: 0;
   height: var(--navbar-height);
   background: var(--header-bg);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  transition: background 0.3s ease;
 }
 
 .navbar {
@@ -59,6 +91,7 @@
   cursor: pointer;
   user-select: none;
   margin-right: 1rem;
+  transition: color 0.3s ease;
 }
 
 /* 折叠菜单项 */
@@ -72,6 +105,7 @@
   color: var(--link-color);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 .nav-collapse a:hover {
@@ -83,13 +117,21 @@
   align-items: center;
 }
 
-/* 主题按钮等可选添加 */
-.theme-toggle {
-  font-size: 1.2rem;
-  color: var(--link-color);
+/* 主题按钮 */
+.theme-toggle-button {
+  font-size: 1.5rem;
+  line-height: 1;
   background: none;
   border: none;
+  color: var(--link-color);
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--button-hover-bg);
 }
 
 /* 移动端样式 */
@@ -110,6 +152,7 @@
     padding: 1rem;
     gap: 1rem;
     z-index: 999;
+    transition: background 0.3s ease;
   }
 
   .nav-toggle:checked + .nav-toggle-label + .nav-collapse {
