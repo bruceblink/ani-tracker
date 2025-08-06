@@ -1,13 +1,12 @@
 use dioxus::prelude::*;
 use crate::components::ani_list::{AniData, AniList};
-use crate::components::Search;
 use crate::components::search::search_server;
 
 
 /// The Home page component that will be rendered when the current route is `[Route::Home]`
 #[component]
 pub fn Home() -> Element {
-    let mut query = use_signal(|| String::new());
+    let query = consume_context::<Signal<String>>();
     let results = use_signal(|| Vec::<AniData>::new());
 
     use_effect(move || {
@@ -19,17 +18,12 @@ pub fn Home() -> Element {
             results.set(data);
         });
     });
-
     rsx! {
         
         div {
             class: "App",
             style: "width: 100%; min-width: 500px; margin: 0 auto;",
             
-            Search {
-                on_search: move |new_q| query.set(new_q),
-            }
-
             if results().is_empty() {
                 p {
                     class: "no-results",
