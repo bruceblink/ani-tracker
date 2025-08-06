@@ -14,6 +14,7 @@
   --search-focus-border: #80bdff;
   --search-text: #495057;
   --button-hover-bg: rgba(0, 0, 0, 0.05);
+  --search-placeholder: rgba(73, 80, 87, 0.7);
 }
 
 /* 深色主题变量 */
@@ -28,6 +29,7 @@
   --search-focus-border: #7b96ff;
   --search-text: #e0e0e0;
   --button-hover-bg: rgba(255, 255, 255, 0.1);
+  --search-placeholder: rgba(224, 224, 224, 0.7);
 }
 
 /* 基础样式 */
