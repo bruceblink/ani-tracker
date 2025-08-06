@@ -21,13 +21,12 @@ pub fn Home() -> Element {
     rsx! {
         
         div {
-            class: "App",
-            style: "width: 100%; min-width: 500px; margin: 0 auto;",
-            
+            class: "home",
+            style: "padding-top: var(--navbar-height);",
             if results().is_empty() {
                 p {
                     class: "no-results",
-                    style: "text-align: center; margin-top: 20px; color: #000;",
+                    style: "text-align: center; margin-top: 80px; color: #000;",
                     "No results found."
                 }
             } else {
