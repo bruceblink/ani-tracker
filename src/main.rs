@@ -20,11 +20,20 @@ const FAVICON: Asset = asset!("/assets/favicon.ico");
 // The asset macro also minifies some assets like CSS and JS to make bundled smaller
 const MAIN_CSS: Asset = asset!("/assets/styling/main.css");
 
+
+const DEV_URL: &str = "http://localhost:8080";
+const PROD_URL: &str = "https://ani-tracker.fly.dev";
+
+fn setup_server_api_url() {
+    let url = if cfg!(debug_assertions) { DEV_URL } else { PROD_URL };
+    server_fn::client::set_server_url(url);
+}
+
 fn main() {
     // The `launch` function is the main entry point for a dioxus app. It takes a component and renders it with the platform feature
     // you have enabled
     #[cfg(not(feature = "server"))]
-    server_fn::client::set_server_url("https://ani-tracker.fly.dev");
+    setup_server_api_url();
     launch(App);
 }
 
