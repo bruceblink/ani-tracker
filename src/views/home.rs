@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 use crate::components::ani_list::{AniData, AniList};
-use crate::components::search::search_server;
+use crate::components::search::search;
 
 
 /// The Home page component that will be rendered when the current route is `[Route::Home]`
@@ -14,7 +14,7 @@ pub fn Home() -> Element {
         let mut results = results.clone();
 
         spawn(async move {
-            let data = search_server(current_query.clone()).await.unwrap_or_default();
+            let data = search(current_query.clone()).await.unwrap_or_default();
             results.set(data);
         });
     });
