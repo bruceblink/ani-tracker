@@ -130,14 +130,6 @@
   }
 }
 
-.no-results {
-  text-align: center;
-  margin-top: 80px;
-  font-size: 1.2rem;
-  color: var(--no-results-color);
-  transition: color 0.3s ease;
-}
-
 .theme-toggle-button svg {
   stroke: var(--link-color); /* 使用主题链接颜色 */
   fill: none; /* 如果不需要填充，设置为 none */
