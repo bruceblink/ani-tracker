@@ -19,4 +19,7 @@ pub use history::History;
 
 
 mod navbar;
+mod notfound;
+pub use notfound::NotFound;
+
 pub use navbar::Navbar;

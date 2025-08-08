@@ -6,7 +6,7 @@
 // need dioxus
 use dioxus::prelude::*;
 
-use views::{Favorite, History, Home, Navbar};
+use views::{Favorite, History, Home, Navbar, NotFound};
 
 /// Define a components module that contains all shared components for our app.
 mod components;
@@ -83,6 +83,11 @@ enum Route {
 
         #[route("/history/:id")]
         History { id: i32 },
+        // Dioxus 会自动将最后一个带有 /:.. 路径的路由作为回退路由。
+        #[route("/:..route")]
+        NotFound {
+            route: Vec<String>,
+        }
 }
 
 
