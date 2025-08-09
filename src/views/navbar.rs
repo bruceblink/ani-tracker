@@ -1,7 +1,7 @@
 use crate::components::theme::ThemeToggle;
-use crate::Route;
 use dioxus::prelude::*;
 use crate::components::{Search};
+use crate::route::Route;
 
 const NAVBAR_CSS: Asset = asset!("/assets/styling/navbar.css");
 

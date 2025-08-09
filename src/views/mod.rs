@@ -20,6 +20,9 @@ pub use history::History;
 
 mod navbar;
 mod notfound;
+mod app;
+pub use app::App;
+
 pub use notfound::NotFound;
 
 pub use navbar::Navbar;

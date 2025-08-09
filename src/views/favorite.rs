@@ -1,5 +1,5 @@
-use crate::Route;
 use dioxus::prelude::*;
+use crate::route::Route;
 
 const FAVOR_CSS: Asset = asset!("/assets/styling/favorite.css");
 
@@ -17,7 +17,7 @@ pub fn Favorite(id: i32) -> Element {
 
             // Content
             h1 { "This is favorite #{id}!" }
-            p { "In favorite #{id}, we show how the Dioxus router works and how URL parameters can be passed as props to our route components." }
+            p { "In favorite #{id}, we show how the Dioxus route works and how URL parameters can be passed as props to our route components." }
 
             // Navigation links
             // The `Link` component lets us link to other routes inside our app. It takes a `to` prop of type `Route` and
