@@ -1,4 +1,4 @@
-:root {
+html {
     /* 基础尺寸和间距 */
     --navbar-height: 3.5rem;
     --toggle-size: 2rem;
@@ -34,7 +34,7 @@
 }
 
 /* 深色主题变量 */
-[data-theme='dark'] {
+html.dark {
     --body-bg: #1a1b1e;
     --text-color: #e0e0e0;
     --header-bg: rgba(29, 31, 36, 0.95);

@@ -28,32 +28,47 @@ fn get_theme_toggle_svg(theme: ThemeMode) -> &'static str {
 #[component]
 pub fn ThemeToggle() -> Element {
     let mut theme_mode = use_signal(|| ThemeMode::Light);
-    
+
     #[cfg(target_family = "wasm")]
-    use_effect(move || {
-        if let Some(storage) = window().and_then(|w| w.local_storage().ok().flatten()) {
-            if let Some(saved_theme) = storage.get_item("theme").ok().flatten() {
-                theme_mode.set(ThemeMode::from(saved_theme.as_str()));
+    {
+        // 初始化从 localStorage 读取主题
+        use_effect({
+            let mut theme_mode = theme_mode.clone();
+            move || {
+                if let Some(storage) = window().and_then(|w| w.local_storage().ok().flatten()) {
+                    if let Some(saved_theme) = storage.get_item("theme").ok().flatten() {
+                        theme_mode.set(ThemeMode::from(saved_theme.as_str()));
+                    }
+                }
             }
-        }
-    });
-    
-    #[cfg(target_family = "wasm")]
-    use_effect(move || {
-        let current_theme_str = match *theme_mode.read() {
-            ThemeMode::Light => "light",
-            ThemeMode::Dark => "dark",
-        };
+        });
 
-        if let Some(document) = window().and_then(|w| w.document()) {
-            let body = document.body().expect("document should have a body");
-            let _ = body.set_attribute("data-theme", current_theme_str);
-        }
+        // 主题变化时，更新 <html> 的 class 及 localStorage
+        use_effect({
+            let theme_mode = theme_mode.clone();
+            move || {
+                let current_theme_str = match *theme_mode.read() {
+                    ThemeMode::Light => "light",
+                    ThemeMode::Dark => "dark",
+                };
 
-        if let Some(storage) = window().and_then(|w| w.local_storage().ok().flatten()) {
-            let _ = storage.set_item("theme", current_theme_str);
-        }
-    });
+                if let Some(document) = window().and_then(|w| w.document()) {
+                    let html = document.document_element().expect("should have html element");
+                    let class_list = html.class_list();
+
+                    if current_theme_str == "dark" {
+                        let _ = class_list.add_1("dark");
+                    } else {
+                        let _ = class_list.remove_1("dark");
+                    }
+                }
+
+                if let Some(storage) = window().and_then(|w| w.local_storage().ok().flatten()) {
+                    let _ = storage.set_item("theme", current_theme_str);
+                }
+            }
+        });
+    }
 
     let on_toggle_theme = move |_| {
         // 1. 先对 theme_mode 进行不可变借用，并获取当前值
