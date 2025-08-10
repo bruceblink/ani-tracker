@@ -46,9 +46,9 @@
       dx build --platform desktop --release
    ```
 
-## 数据存储
-
-直接更新在readme中和存储在data/**_cartoon.json文件中
+5. 部署到 Fly.io：
+    使用Github账号登录到[Fly.io](https://fly.io/dashboard/likanug/new)选择你要部署代码仓库即可，一键部署应用
+    
 
 ## 项目文件说明
 
