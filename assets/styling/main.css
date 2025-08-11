@@ -9,8 +9,6 @@ html {
     --header-bg: rgba(255, 255, 255, 0.95);
     --link-color: #333;
     --link-hover: #007bff;
-    --search-bg: #e9ecef;
-    --search-border: #ced4da;
     --search-focus-border: #80bdff;
     --search-text: #495057;
     --search-placeholder: rgba(73, 80, 87, 0.7);
@@ -31,6 +29,12 @@ html {
     --button-text: #1a1a1a;
     --button-border: #646cff;
     --button-hover-bg: rgba(0, 0, 0, 0.05);
+
+    --search-bg: white;
+    --search-border: #e6e6e6;
+    --search-box-shadow: rgba(0,0,0,0.06);
+    --search-close-color: #000;
+    --search-btn-hover-bg: rgba(0,0,0,0.04);
 }
 
 /* 深色主题变量 */
@@ -40,8 +44,6 @@ html.dark {
     --header-bg: rgba(29, 31, 36, 0.95);
     --link-color: #e0e0e0;
     --link-hover: #7b96ff;
-    --search-bg: #2d2e33;
-    --search-border: #444;
     --search-focus-border: #7b96ff;
     --search-text: #e0e0e0;
     --search-placeholder: rgba(224, 224, 224, 0.7);
@@ -62,6 +64,12 @@ html.dark {
     --button-text: #ffffff;
     --button-border: #646cff;
     --button-hover-bg: rgba(255, 255, 255, 0.1);
+
+    --search-bg: #1e1e1e;
+    --search-border: #444;
+    --search-box-shadow: rgba(255,255,255,0.1);
+    --search-close-color: #fff;
+    --search-btn-hover-bg: rgba(255,255,255,0.1);
 }
 
 a {
