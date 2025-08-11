@@ -1,8 +1,4 @@
 #favorite {
-  margin-top: 50px;
+  padding-top: var(--navbar-height);
 }
 
-#favorite a {
-  color: black;
-  margin-top: 50px;
-}
