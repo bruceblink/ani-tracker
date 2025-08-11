@@ -3,8 +3,7 @@ use crate::components::ani_list::AniData;
 const SEARCH_CSS: Asset = asset!("/assets/styling/search.css");
 
 
-#[derive(Props, PartialEq)]
-#[derive(Clone)]
+#[derive(Props, PartialEq, Clone)]
 pub struct SearchProps {
     pub on_search: EventHandler<String>,
 }
@@ -12,25 +11,44 @@ pub struct SearchProps {
 /// Search component that demonstrates fullstack server functions.
 #[component]
 pub fn Search(props: SearchProps) -> Element {
-    // use_signal is a hook. Hooks in dioxus must be run in a consistent order every time the component is rendered.
-    // That means they can't be run inside other hooks, async blocks, if statements, or loops.
-    //
-    // use_signal is a hook that creates a state for the component. It takes a closure that returns the initial value of the state.
-    // The state is automatically tracked and will rerun any other hooks or components that read it whenever it changes.
-    let SearchProps { on_search } = props;
+    // 拷贝 prop 里的回调（EventHandler 实现了 Clone）
+    let on_search = props.on_search.clone();
+    
+    let mut expanded = use_signal(|| false);
 
     rsx! {
         document::Link { rel: "stylesheet", href: SEARCH_CSS }
 
         div {
-            class: "search-container",
-            input {
-                class: "search-input",
-                r#type: "text",
-                placeholder: "Type here to search...",
-                // `oninput` is an event handler that will run when the input changes. It can return either nothing or a future
-                // that will be run when the event runs.
-                oninput: move |e| on_search.call(e.value().to_string()),
+            class: "search-wrap",
+            if *expanded.read() {  // 读取 signal 的值要用 read()
+
+                input {
+                    class: "search-input expanded",
+                    r#type: "text",
+                    placeholder: "Search...",
+                    autofocus: "autofocus",
+                    oninput: move |e| on_search.call(e.value().to_string()),
+                    // 写入 signal 用 write()
+                    onblur: move |_| *expanded.write() = false,
+                }
+                button { class: "search-close", onclick: move |_| *expanded.write() = false, "✕" }
+
+            } else {
+
+                button {
+                    class: "search-btn",
+                    r#type: "button",               // 防止在 form 中触发 submit
+                    aria_label: "Open search",      // 无障碍
+                    onclick: move |_| *expanded.write() = true,
+                    svg {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        width: "24", height: "24", view_box: "0 0 24 24", fill: "none", stroke: "currentColor", stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
+                        circle { cx: "11", cy: "11", r: "6" }
+                        path { d: "M21 21l-4.35-4.35" }
+                    }
+                }
+
             }
         }
     }

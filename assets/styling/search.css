@@ -1,31 +1,69 @@
-.search-container {
-  display: flex;
+/* search.css - 放到你的静态资源目录（例如 web/static 或者 public/static），
+   然后在组件里用 document::Link 引入正确的 href 路径。 */
+
+/* 外层容器，内联显示并垂直居中 */
+.search-wrap {
+  display: inline-flex;
   align-items: center;
+  position: relative;
+  gap: 8px;
 }
 
+/* 放大镜按钮（初始状态）*/
+.search-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  background: transparent;
+  padding: 0;
+  transition: background 150ms ease, transform 120ms ease;
+}
+
+/* 鼠标悬停样式（可选） */
+.search-btn:hover {
+  background: rgba(0,0,0,0.04);
+  transform: translateY(-1px);
+}
+
+/* 输入框（收起态）*/
 .search-input {
-  width: 200px;
-  padding: 0.5rem 0.75rem;
-  background: var(--search-bg);
-  border: 1px solid var(--search-border);
-  color: var(--search-text);
-  border-radius: 4px;
-  transition: width 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-.search-input::placeholder {
-  color: var(--search-placeholder);
-}
-
-.search-input:focus {
+  width: 0;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 20px;
   outline: none;
-  width: 250px;
-  border-color: var(--search-focus-border);
-  box-shadow: 0 0 0 3px rgba(128, 189, 255, 0.25);
+  transition: width 220ms ease, padding 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: white;
 }
 
-@media (max-width: 720px) {
-  .search-input {
-    width: 100%;
+/* 输入框（展开态）*/
+.search-input.expanded {
+  width: 220px;           /* 展开宽度，可按需修改 */
+  padding: 8px 12px;
+  border-color: #e6e6e6;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* 关闭按钮（展开时显示）*/
+.search-close {
+  margin-left: 4px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 6px;
+}
+
+/* 在窄屏上把展开宽度缩小 */
+@media (max-width: 480px) {
+  .search-input.expanded {
+    width: 140px;
   }
 }
