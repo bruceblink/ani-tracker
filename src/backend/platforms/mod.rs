@@ -2,12 +2,12 @@ use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
 
-mod bilibili;
-mod agedm;
-mod iqiyi;
-mod mikanani;
-mod tencent;
-mod youku;
+pub mod bilibili;
+pub mod agedm;
+pub mod iqiyi;
+pub mod mikanani;
+pub mod tencent;
+pub mod youku;
 
 pub type AniItemResult = HashMap<String, Vec<AniItem>>;
 

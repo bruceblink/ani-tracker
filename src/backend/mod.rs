@@ -1,4 +1,5 @@
-mod platforms;
+pub mod platforms;
+pub mod tasker;
 
 use serde::Serialize;
 
