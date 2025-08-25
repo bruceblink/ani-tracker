@@ -1,4 +1,3 @@
-use regex::Regex;
 
 pub mod date_utils;
 pub mod http_client;
