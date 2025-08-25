@@ -26,7 +26,15 @@ RUN cargo install cargo-binstall && cargo binstall dioxus-cli
 RUN dx build --platform web --release
 
 # 拷贝构建好的前端静态文件到 public/（由 Server 程序统一托管）
-FROM chef AS runtime
+FROM debian:bookworm-slim AS runtime
+WORKDIR /app
+# 安装运行依赖
+RUN apt-get update -y \
+  && apt-get install -y --no-install-recommends openssl ca-certificates \
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/*
+# 拷贝编译好的二进制
 COPY --from=builder /app/target/dx/ani-tracker/release/web/ /usr/local/app
 
 # 设置环境变量并暴露端口
