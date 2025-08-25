@@ -38,8 +38,10 @@ pub fn load_configuration(config_path: PathBuf) -> Result<AppConfig, config::Con
 
 
 /// 初始化应用配置
-pub fn init_config(app_path: PathBuf) -> std::io::Result<PathBuf> {
+pub fn init_config() -> std::io::Result<PathBuf> {
 
+    let app_path = std::env::current_dir().expect("Failed to determine the current directory"); // 应用程序的根目录
+    // 配置文件目录
     let config_path = app_path.join("conf".to_string());
     // 配置文件的目标路径
     let target_config_path = config_path.join("config.yaml".to_string());
@@ -78,8 +80,7 @@ mod tests {
 
     #[test]
     fn test_configuration_content() {
-        let current_dir = std::env::current_dir().expect("Failed to determine the current directory");
-        let config_path = init_config(current_dir).expect("Failed to init conf.");
+        let config_path = init_config().expect("Failed to init conf.");
         let configuration = load_configuration(config_path.clone()).expect("Failed to read conf.");
         println!("{:?}", configuration);
         assert_eq!(configuration.datasource.len(), 2);
