@@ -4,7 +4,7 @@ use crate::utils::http_client::http_client;
 use base64::{engine::general_purpose, Engine as _};
 use scraper::{Html, Selector};
 use std::collections::HashMap;
-use dioxus::logger::tracing::log::{debug, info};
+use dioxus::logger::tracing::{info, debug};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
 
@@ -30,7 +30,7 @@ pub async fn fetch_agedm_image(url: String) -> Result<String, String> {
     let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
 
     // 转 base64，并拼成 Data URL
-    let b64 = general_purpose::STANDARD.encode(&bytes);
+    let b64 = general_purpose::STANDARD.encode(bytes);
     Ok(format!("data:{};base64,{}", ct, b64))
 }
 

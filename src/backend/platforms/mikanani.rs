@@ -1,9 +1,10 @@
+
 use crate::utils::date_utils::{get_today_weekday, get_today_slash};
 use base64::{engine::general_purpose, Engine as _};
 use reqwest::Url;
 use scraper::{Html, Selector};
 use std::collections::HashMap;
-use dioxus::logger::tracing::log::{debug, info};
+use dioxus::logger::tracing::{debug, info};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
 
@@ -29,7 +30,7 @@ pub async fn fetch_mikanani_image(url: String) -> Result<String, String> {
     let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
 
     // 转 base64，并拼成 Data URL
-    let b64 = general_purpose::STANDARD.encode(&bytes);
+    let b64 = general_purpose::STANDARD.encode(bytes);
     Ok(format!("data:{};base64,{}", ct, b64))
 }
 

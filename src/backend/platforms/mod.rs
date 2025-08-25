@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
-use sqlx::FromRow;
 
 pub mod bilibili;
 pub mod agedm;
@@ -11,7 +10,7 @@ pub mod youku;
 
 pub type AniItemResult = HashMap<String, Vec<AniItem>>;
 
-#[derive(Debug, Clone, FromRow, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AniItem {
     pub title: String,
     pub update_count: String,

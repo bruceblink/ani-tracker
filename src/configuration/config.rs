@@ -2,7 +2,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
-use dioxus::logger::tracing::log::info;
+use dioxus::logger::tracing::info;
 
 #[derive(Debug, Deserialize)]
 pub struct DataSource {
@@ -25,7 +25,7 @@ pub fn load_configuration(config_path: PathBuf) -> Result<AppConfig, config::Con
     let configuration_directory = config_path;
     let settings = config::Config::builder()
         .add_source(config::File::from(
-            configuration_directory.join("config.yaml"),
+            configuration_directory.join("config.yaml".to_string()),
         ))
         .add_source(
             config::Environment::with_prefix("APP")
@@ -40,13 +40,13 @@ pub fn load_configuration(config_path: PathBuf) -> Result<AppConfig, config::Con
 /// 初始化应用配置
 pub fn init_config(app_path: PathBuf) -> std::io::Result<PathBuf> {
 
-    let config_path = app_path.join("../conf");
+    let config_path = app_path.join("../conf".to_string());
     // 配置文件的目标路径
-    let target_config_path = config_path.join("config.yaml");
+    let target_config_path = config_path.join("config.yaml".to_string());
 
     // 检查配置文件是否已存在，如果不存在则复制
     if !target_config_path.exists() {
-        let config_file_in_resources = config_path.join("../conf/config.yaml");
+        let config_file_in_resources = config_path.join("../conf/config.yaml".to_string());
 
         // 复制配置文件到目标目录
         if !config_file_in_resources.exists() {
@@ -74,7 +74,7 @@ mod tests {
     fn test_configuration_folder() {
         let base_path = std::env::current_dir().expect("Failed to determine the current directory");
         // "F:\Rust_Project\ani_todo_app\src-tauri"
-        assert!(base_path.ends_with("src-tauri"));
+        assert!(base_path.ends_with("src-tauri".to_string()));
     }
 
     #[test]
@@ -93,12 +93,12 @@ mod tests {
             .get("anime")
             .expect("Missing anime category");
         assert_eq!(anime_sources.len(), 6);
-        assert_eq!(anime_sources[0].name, "哔哩哔哩国创");
+        assert_eq!(anime_sources[0].name, "哔哩哔哩国创".to_string());
         assert_eq!(
             anime_sources[0].url,
-            "https://api.bilibili.com/pgc/web/timeline?types=4&before=6&after=6"
+            "https://api.bilibili.com/pgc/web/timeline?types=4&before=6&after=6".to_string()
         );
-        assert_eq!(anime_sources[0].cmd, "fetch_bilibili_ani_data");
+        assert_eq!(anime_sources[0].cmd, "fetch_bilibili_ani_data".to_string());
 
         // 验证 drama 分类
         let drama_sources = configuration
@@ -106,6 +106,6 @@ mod tests {
             .get("drama")
             .expect("Missing drama category");
         assert_eq!(drama_sources.len(), 1);
-        assert_eq!(drama_sources[0].name, "腾讯视频");
+        assert_eq!(drama_sources[0].name, "腾讯视频".to_string());
     }
 }

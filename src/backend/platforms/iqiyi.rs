@@ -4,7 +4,7 @@ use base64::{engine::general_purpose, Engine as _};
 use chrono::{Datelike, Local};
 use serde_json::Value;
 use std::collections::HashMap;
-use dioxus::logger::tracing::log::{error, info};
+use dioxus::logger::tracing::{error, info};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
 
@@ -30,7 +30,7 @@ pub async fn fetch_iqiyi_image(url: String) -> Result<String, String> {
     let bytes = resp.bytes().await.map_err(|e| e.to_string())?;
 
     // 转 base64，并拼成 Data URL
-    let b64 = general_purpose::STANDARD.encode(&bytes);
+    let b64 = general_purpose::STANDARD.encode(bytes);
     Ok(format!("data:{};base64,{}", ct, b64))
 }
 

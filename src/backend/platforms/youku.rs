@@ -7,7 +7,7 @@ use reqwest::header;
 use scraper::{Html, Selector};
 use serde_json::Value;
 use std::collections::HashMap;
-use dioxus::logger::tracing::log::{debug, info};
+use dioxus::logger::tracing::{debug, info};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
 
@@ -23,16 +23,16 @@ async fn fetch_image_base64(url: &str, referer: &str) -> Result<String> {
         .header(header::REFERER, referer)
         .send()
         .await
-        .context("请求图片失败")?;
+        .context("请求图片失败".to_string())?;
 
     let headers = resp.headers().clone();
-    let bytes = resp.bytes().await.context("读取图片字节失败")?;
+    let bytes = resp.bytes().await.context("读取图片字节失败".to_string())?;
     let content_type = headers
         .get(header::CONTENT_TYPE)
         .and_then(|v| v.to_str().ok())
         .unwrap_or("application/octet-stream");
 
-    let b64 = general_purpose::STANDARD.encode(&bytes);
+    let b64 = general_purpose::STANDARD.encode(bytes);
     Ok(format!("data:{};base64,{}", content_type, b64))
 }
 
@@ -48,7 +48,7 @@ pub async fn fetch_youku_ani_data(url: String) -> Result<ApiResponse<AniItemResu
     // 2. 请求页面并读取 HTML
     let html = client
         .get(&url)
-        .header(reqwest::header::REFERER, "https://www.youku.com/")
+        .header(header::REFERER, "https://www.youku.com/")
         .send()
         .await
         .map_err(|e| e.to_string())?
@@ -103,15 +103,15 @@ fn extract_initial_data(html: &str) -> Result<Value> {
     let content = doc.select(&script_sel)
         .filter_map(|s| s.text().next())
         .find(|t| t.contains("__INITIAL_DATA__"))
-        .context("未找到 __INITIAL_DATA__ 脚本块")?;
+        .context("未找到 __INITIAL_DATA__ 脚本块".to_string())?;
 
     let json_part = content
         .split_once("window.__INITIAL_DATA__ =")
         .and_then(|(_, rest)| rest.strip_suffix(';'))
-        .context("提取 JSON 部分失败")?;
+        .context("提取 JSON 部分失败".to_string())?;
 
     let fixed = json_part.replace("undefined", "null");
-    let value: Value = serde_json::from_str(&fixed).context("解析 JSON 失败")?;
+    let value: Value = serde_json::from_str(&fixed).context("解析 JSON 失败".to_string())?;
     Ok(value)
 }
 
