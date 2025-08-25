@@ -2,7 +2,7 @@
 
 ## 项目简介
 
-该项目为：[ani-todo-app](https://github.com/bruceblink/ani-todo-app) 项目使用Rust的Dioxus重新实现的全栈版本(包含Web端可桌面端)[ani-tracker](https://ani-tracker.fly.dev/)，旨在提供一个高效、易用的个人追番助手。它可以帮助用户追踪各大视频平台的动漫更新信息，并提供便捷的查询和管理功能。
+该项目为：[ani-todo-app](https://github.com/bruceblink/ani-todo-app) 项目使用Rust的Dioxus重新实现的全栈版本(包含Web端和桌面端)[ani-tracker](https://ani-tracker.fly.dev/)，旨在提供一个高效、易用的个人追番助手。它可以帮助用户追踪各大视频平台的动漫更新信息，并提供便捷的查询和管理功能。
 
 ## 功能特点
 
