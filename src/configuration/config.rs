@@ -40,13 +40,13 @@ pub fn load_configuration(config_path: PathBuf) -> Result<AppConfig, config::Con
 /// 初始化应用配置
 pub fn init_config(app_path: PathBuf) -> std::io::Result<PathBuf> {
 
-    let config_path = app_path.join("../conf".to_string());
+    let config_path = app_path.join("conf".to_string());
     // 配置文件的目标路径
     let target_config_path = config_path.join("config.yaml".to_string());
 
     // 检查配置文件是否已存在，如果不存在则复制
     if !target_config_path.exists() {
-        let config_file_in_resources = config_path.join("../conf/config.yaml".to_string());
+        let config_file_in_resources = config_path.join("./conf/config.yaml".to_string());
 
         // 复制配置文件到目标目录
         if !config_file_in_resources.exists() {
@@ -73,18 +73,18 @@ mod tests {
     #[test]
     fn test_configuration_folder() {
         let base_path = std::env::current_dir().expect("Failed to determine the current directory");
-        // "F:\Rust_Project\ani_todo_app\src-tauri"
-        assert!(base_path.ends_with("src-tauri".to_string()));
+        assert!(base_path.ends_with("ani-tracker".to_string()));
     }
 
     #[test]
     fn test_configuration_content() {
-        let tmp = PathBuf::new();
-        let configuration = load_configuration(tmp.clone()).expect("Failed to read conf.");
+        let current_dir = std::env::current_dir().expect("Failed to determine the current directory");
+        let config_path = init_config(current_dir).expect("Failed to init conf.");
+        let configuration = load_configuration(config_path.clone()).expect("Failed to read conf.");
         println!("{:?}", configuration);
         assert_eq!(configuration.datasource.len(), 2);
 
-        let configuration = load_configuration(tmp).expect("Failed to read conf.");
+        let configuration = load_configuration(config_path).expect("Failed to read conf.");
         println!("{:#?}", configuration);
 
         // 验证 anime 分类
