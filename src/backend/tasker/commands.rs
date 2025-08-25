@@ -13,7 +13,7 @@ use crate::backend::platforms::youku::fetch_youku_ani_data;
 
 /// CmdFn 表示：接收 String 参数（arg/url），返回一个 boxed future，输出为 Result<ApiResponse<AniItemResult>, String>
 pub type CmdFn = Arc<
-    dyn Fn(String) -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>> + Send>>
+    dyn Fn(String) -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>>>>
     + Send
     + Sync,
 >;
