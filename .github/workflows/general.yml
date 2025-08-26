@@ -1,16 +1,16 @@
-name: Rust
+name: Rust CI & Fly Deploy
 
 on:
-  # NB: this differs from the book's project!
-  # These settings allow us to run this specific CI pipeline for PRs against
-  # this specific branch (a.k.a. book chapter).
   push:
     branches:
       - main
-  pull_request:
-    types: [ opened, synchronize, reopened ]
-    branches:
-      - main
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.gitattributes'
+      - 'picture/**'
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
@@ -24,10 +24,8 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    # Service containers to run alongside the `test` container job
     services:
       postgres:
-        # Docker Hub image
         image: postgres:latest
         env:
           POSTGRES_USER: postgres
@@ -35,66 +33,35 @@ jobs:
           POSTGRES_DB: ani_tracker
         ports:
           - 5432:5432
-    #      redis:
-    #        image: redis:7
-    #        ports:
-    #          - 6379:6379
     steps:
-      # Downloads a copy of the code in your repository before running CI tests
-      - name: Check out repository code
-        # The uses keyword specifies that this step will run v4 of the actions/checkout action.
-        # This is an action that checks out your repository onto the runner, allowing you to run scripts or other actions against your code (such as build and test tools).
-        # You should use the checkout action any time your workflow will run against the repository's code.
-        uses: actions/checkout@v4
-
-      # This GitHub Action installs a Rust toolchain using rustup. It is designed for one-line concise usage and good defaults.
-      # It also takes care of caching intermediate build artifacts.
-      - name: Install the Rust toolchain
+      - uses: actions/checkout@v4
+      - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
-
       - name: Install sqlx-cli
-        run:
-          cargo install sqlx-cli
-          --version=${{ env.SQLX_VERSION }}
-          --features ${{ env.SQLX_FEATURES }}
-          --no-default-features
-          --locked
-          # The --locked flag can be used to force Cargo to use the packaged Cargo.lock file if it is available.
-          # This may be useful for ensuring reproducible builds, to use the exact same set of dependencies that were available when the package was published.
-        # It may also be useful if a newer version of a dependency is published that no longer builds on your system, or has other problems
-
+        run: cargo install sqlx-cli --version=${{ env.SQLX_VERSION }} --features ${{ env.SQLX_FEATURES }} --no-default-features --locked
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client pkg-config libglib2.0-dev libcairo2-dev libgdk-pixbuf2.0-dev libgtk-3-dev
       - name: Create app user in Postgres
         run: |
-          sudo apt-get install postgresql-client
-
-          # Create the application user
           CREATE_QUERY="CREATE USER ${APP_USER} WITH PASSWORD '${APP_USER_PWD}';"
           PGPASSWORD="password" psql -U "postgres" -h "localhost" -c "${CREATE_QUERY}"
-
-          # Grant create db privileges to the app user
           GRANT_QUERY="ALTER USER ${APP_USER} CREATEDB;"
           PGPASSWORD="password" psql -U "postgres" -h "localhost" -c "${GRANT_QUERY}"
-
-      - name: Ensure scripts are executable
+      - name: Ensure scripts executable
         run: chmod +x ./scripts/*.sh
-
       - name: Migrate database
-        run: |
-          SKIP_DOCKER=true ./scripts/init_db.sh
-
+        run: SKIP_DOCKER=true ./scripts/init_db.sh
       - name: Run tests
         run: cargo test
-
-      - name: Check that queries are fresh
+      - name: Check SQLX queries
         run: cargo sqlx prepare --workspace --check -- --all-targets
 
-  # `fmt` container job
   fmt:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install the Rust toolchain
+      - name: Install Rustfmt
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: rustfmt
@@ -108,16 +75,17 @@ jobs:
       SQLX_OFFLINE: true
     steps:
       - uses: actions/checkout@v4
-      - name: Install the Rust toolchain
+      - name: Install Clippy
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: clippy
-      - name: Linting
+      - name: Lint
         run: cargo clippy -- -D warnings
 
   coverage:
     name: Code coverage
     runs-on: ubuntu-latest
+    needs: [test]   # 只依赖测试通过
     services:
       postgres:
         image: postgres:latest
@@ -127,50 +95,37 @@ jobs:
           POSTGRES_DB: ani_tracker
         ports:
           - 5432:5432
-    #      redis:
-    #        image: redis:7
-    #        ports:
-    #          - 6379:6379
     steps:
       - uses: actions/checkout@v4
-      - name: Install the Rust toolchain
+      - name: Install Rust with LLVM
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: llvm-tools-preview
-      - name: Install sqlx-cli
-        run: cargo install sqlx-cli
-          --version=${{ env.SQLX_VERSION }}
-          --features ${{ env.SQLX_FEATURES }}
-          --no-default-features
-          --locked
-      - name: Create app user in Postgres
-        run: |
-          sudo apt-get install postgresql-client
-
-          # Create the application user
-          CREATE_QUERY="CREATE USER ${APP_USER} WITH PASSWORD '${APP_USER_PWD}';"
-          PGPASSWORD="password" psql -U "postgres" -h "localhost" -c "${CREATE_QUERY}"
-
-          # Grant create db privileges to the app user
-          GRANT_QUERY="ALTER USER ${APP_USER} CREATEDB;"
-          PGPASSWORD="password" psql -U "postgres" -h "localhost" -c "${GRANT_QUERY}"
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pkg-config libglib2.0-dev libcairo2-dev libgdk-pixbuf2.0-dev libgtk-3-dev
-
-      - name: Ensure scripts are executable
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client pkg-config libglib2.0-dev libcairo2-dev libgdk-pixbuf2.0-dev libgtk-3-dev
+      - name: Ensure scripts executable
         run: chmod +x ./scripts/*.sh
       - name: Migrate database
         run: SKIP_DOCKER=true ./scripts/init_db.sh
-      - name: Install cargo-llvm-cov
-        uses: taiki-e/install-action@cargo-llvm-cov
-      - name: Generate code coverage
+      - name: Generate coverage
         run: cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
-      - name: Generate report
+      - name: Generate HTML report
         run: cargo llvm-cov report --html --output-dir coverage
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage report"
           path: coverage/
+
+  fly-deploy:
+    name: Fly Deploy
+    runs-on: ubuntu-latest
+    needs: [test, coverage]   # ✅ 依赖测试和 coverage
+    concurrency: deploy-group
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
