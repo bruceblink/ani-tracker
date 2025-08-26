@@ -1,4 +1,6 @@
+#[cfg(feature = "server")]
 pub mod platforms;
+#[cfg(feature = "server")]
 pub mod tasker;
 
 use serde::Serialize;

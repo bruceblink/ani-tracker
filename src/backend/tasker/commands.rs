@@ -3,8 +3,8 @@ use std::future::Future;
 use std::pin::Pin;
 use std::sync::Arc;
 use crate::backend::ApiResponse;
-use crate::backend::platforms::agedm::fetch_agedm_ani_data;
 use crate::backend::platforms::AniItemResult;
+use crate::backend::platforms::agedm::fetch_agedm_ani_data;
 use crate::backend::platforms::bilibili::fetch_bilibili_ani_data;
 use crate::backend::platforms::iqiyi::fetch_iqiyi_ani_data;
 use crate::backend::platforms::mikanani::fetch_mikanani_ani_data;
@@ -13,7 +13,7 @@ use crate::backend::platforms::youku::fetch_youku_ani_data;
 
 /// CmdFn 表示：接收 String 参数（arg/url），返回一个 boxed future，输出为 Result<ApiResponse<AniItemResult>, String>
 pub type CmdFn = Arc<
-    dyn Fn(String) -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>>>>
+    dyn Fn(String) -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>> + Send>>
     + Send
     + Sync,
 >;
