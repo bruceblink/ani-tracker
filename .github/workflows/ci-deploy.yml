@@ -126,8 +126,8 @@ jobs:
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Generate coverage report
         run: |
-          cargo llvm-cov --no-default-features --features server --package server --lcov --output-path lcov.info
-          cargo llvm-cov report --no-default-features --features server --package server --html --output-dir coverage
+          cargo llvm-cov --no-default-features --features server --lcov --output-path lcov.info
+          cargo llvm-cov report --no-default-features --features server --html --output-dir coverage
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage report"
