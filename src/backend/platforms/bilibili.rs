@@ -1,11 +1,11 @@
-use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
-use crate::backend::utils::{clean_text, extract_number};
-use base64::{engine::general_purpose, Engine as _};
-use serde_json::Value;
-use std::collections::HashMap;
-use dioxus::logger::tracing::{error, info};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
+use crate::backend::utils::date_utils::{get_today_slash, get_today_weekday};
+use crate::backend::utils::{clean_text, extract_number};
+use base64::{Engine as _, engine::general_purpose};
+use dioxus::logger::tracing::{error, info};
+use serde_json::Value;
+use std::collections::HashMap;
 
 pub async fn fetch_bilibili_image(url: String) -> Result<String, String> {
     // 新建异步 Reqwest 客户端
@@ -42,10 +42,7 @@ pub async fn fetch_bilibili_ani_data(url: String) -> Result<ApiResponse<AniItemR
         .await
         .map_err(|e| e.to_string())?;
 
-    let json_value: Value = response
-        .json()
-        .await
-        .map_err(|e| e.to_string())?;
+    let json_value: Value = response.json().await.map_err(|e| e.to_string())?;
 
     let result: AniItemResult = process_json_value(&json_value);
     Ok(ApiResponse::ok(result))
@@ -157,6 +154,6 @@ fn parse_item(ep: &Value) -> AniItem {
         update_info,
         image_url,
         detail_url,
-        update_time: get_today_slash(), 
+        update_time: get_today_slash(),
     }
 }

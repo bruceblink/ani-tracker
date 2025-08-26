@@ -18,5 +18,4 @@ pub fn NotFound(route: Vec<String>) -> Element {
         }
 
     }
-
 }

@@ -1,6 +1,6 @@
-use dioxus::prelude::*;
 use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
+use dioxus::prelude::*;
 
 use crate::client::route::Route;
 const FAVICON: Asset = asset!("/assets/favicon.ico");

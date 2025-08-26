@@ -1,10 +1,13 @@
 use dioxus::prelude::*;
 
-
 fn setup_server_api_url() {
     const DEV_URL: &str = "http://localhost:8080";
     const PROD_URL: &str = "https://ani-tracker.fly.dev";
-    let url = if cfg!(debug_assertions) { DEV_URL } else { PROD_URL };
+    let url = if cfg!(debug_assertions) {
+        DEV_URL
+    } else {
+        PROD_URL
+    };
     server_fn::client::set_server_url(url);
 }
 #[cfg(not(feature = "server"))]

@@ -1,3 +1,5 @@
+use crate::backend::ApiResponse;
+use crate::backend::platforms::AniItemResult;
 use async_trait::async_trait;
 use cron::Schedule;
 use std::collections::HashMap;
@@ -5,8 +7,6 @@ use std::future::Future;
 use std::pin::Pin;
 use std::str::FromStr;
 use std::sync::Arc;
-use crate::backend::ApiResponse;
-use crate::backend::platforms::AniItemResult;
 
 /// -----------------
 /// 配置层 TaskMeta
@@ -71,9 +71,12 @@ impl Task {
 
 /// CmdFn 类型（和你之前约定一致）
 pub type CmdFn = Arc<
-    dyn Fn(String) -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>> + Send>>
-    + Send
-    + Sync,
+    dyn Fn(
+            String,
+        )
+            -> Pin<Box<dyn Future<Output = Result<ApiResponse<AniItemResult>, String>> + Send>>
+        + Send
+        + Sync,
 >;
 
 /// 将 TaskMeta 列表和命令表合并，生成运行时 Task 列表
@@ -130,7 +133,10 @@ pub fn build_tasks_from_meta(metas: &[TaskMeta], cmd_map: &HashMap<String, CmdFn
                     let missing_cmd = missing_cmd.clone();
                     let name = name.clone();
                     async move {
-                        Err(format!("cmd '{}' not found for task '{}'", missing_cmd, name))
+                        Err(format!(
+                            "cmd '{}' not found for task '{}'",
+                            missing_cmd, name
+                        ))
                     }
                 },
             );

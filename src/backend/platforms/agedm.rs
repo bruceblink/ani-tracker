@@ -1,12 +1,12 @@
-use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
-use crate::backend::utils::extract_number;
-use crate::backend::utils::http_client::http_client;
-use base64::{engine::general_purpose, Engine as _};
-use scraper::{Html, Selector};
-use std::collections::HashMap;
-use dioxus::logger::tracing::{info, debug};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
+use crate::backend::utils::date_utils::{get_today_slash, get_today_weekday};
+use crate::backend::utils::extract_number;
+use crate::backend::utils::http_client::http_client;
+use base64::{Engine as _, engine::general_purpose};
+use dioxus::logger::tracing::{debug, info};
+use scraper::{Html, Selector};
+use std::collections::HashMap;
 
 pub async fn fetch_agedm_image(url: String) -> Result<String, String> {
     // 新建异步 Reqwest 客户端
@@ -34,7 +34,6 @@ pub async fn fetch_agedm_image(url: String) -> Result<String, String> {
     Ok(format!("data:{};base64,{}", ct, b64))
 }
 
-
 pub async fn fetch_agedm_ani_data(url: String) -> Result<ApiResponse<AniItemResult>, String> {
     // 1. 发请求拿响应
     let client = http_client()?; // 若失败会 early-return Err(String)
@@ -46,10 +45,7 @@ pub async fn fetch_agedm_ani_data(url: String) -> Result<ApiResponse<AniItemResu
         .map_err(|e| e.to_string())?;
 
     // 2. 解析成 HTML 文本
-    let body = response
-        .text()
-        .await
-        .map_err(|e| e.to_string())?;
+    let body = response.text().await.map_err(|e| e.to_string())?;
     debug!(
         "解析从 AGE 动漫获取到的 HTML，前 200 字符：\n{}",
         &body[..200.min(body.len())]
@@ -60,16 +56,14 @@ pub async fn fetch_agedm_ani_data(url: String) -> Result<ApiResponse<AniItemResu
     let document = Html::parse_document(&body);
     // 1. 找到那个包含“今天 (土曜日)”按钮的 <div class="video_list_box recent_update ...">
     let list_box_sel = Selector::parse("div.video_list_box.recent_update").unwrap();
-    let button_sel   = Selector::parse("button.btn-danger").unwrap();
+    let button_sel = Selector::parse("button.btn-danger").unwrap();
 
     // 遍历所有最近更新块，选第一个按钮文本以“今天”开头的那个
     // 先尝试找 “今天” 对应的列表节点
-    let maybe_today_box = document
-        .select(&list_box_sel)
-        .find(|bx| {
-            bx.select(&button_sel)
-                .any(|btn| btn.text().any(|t| t.trim().starts_with("今天")))
-        });
+    let maybe_today_box = document.select(&list_box_sel).find(|bx| {
+        bx.select(&button_sel)
+            .any(|btn| btn.text().any(|t| t.trim().starts_with("今天")))
+    });
 
     // 4. 如果没找到「今天」区块，返回空结果
     let today_box = if let Some(bx) = maybe_today_box {
@@ -131,7 +125,7 @@ pub async fn fetch_agedm_ani_data(url: String) -> Result<ApiResponse<AniItemResu
                     .trim_end_matches('/') // 去掉末尾多余斜杠（可选）
                     .to_string(); // 拷贝成 String
                 let href = format!("{}/1/{}", href, update_count);
-                let txt  = a.text().collect::<String>().trim().to_string();
+                let txt = a.text().collect::<String>().trim().to_string();
                 (txt, href)
             })
             .unwrap_or_default();

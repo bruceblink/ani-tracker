@@ -1,5 +1,5 @@
-use dioxus::prelude::*;
 use crate::client::route::Route;
+use dioxus::prelude::*;
 
 const HIST_CSS: Asset = asset!("/assets/styling/history.css");
 

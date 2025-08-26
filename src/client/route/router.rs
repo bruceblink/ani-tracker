@@ -1,7 +1,7 @@
-use dioxus::prelude::*;
 use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
 use dioxus::hooks::use_signal;
+use dioxus::prelude::*;
 
 use crate::client::views::{Favorite, History, Home, Navbar, NotFound};
 /// The Route enum is used to define the structure of internal routes in our app. All route enums need to derive
@@ -35,11 +35,10 @@ pub enum Route {
         }
 }
 
-
 #[component]
 pub fn AppLayout() -> Element {
     let mut query = use_signal(|| "".to_string());
-    provide_context(query);  // 👈 将 query提示为全局 提供给子组件
+    provide_context(query); // 👈 将 query提示为全局 提供给子组件
     rsx! {
         div {
             class: "App",

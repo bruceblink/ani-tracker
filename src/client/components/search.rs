@@ -1,7 +1,6 @@
-use dioxus::prelude::*;
 use crate::client::components::ani_list::AniData;
+use dioxus::prelude::*;
 const SEARCH_CSS: Asset = asset!("/assets/styling/search.css");
-
 
 #[derive(Props, PartialEq, Clone)]
 pub struct SearchProps {
@@ -13,7 +12,7 @@ pub struct SearchProps {
 pub fn Search(props: SearchProps) -> Element {
     // 拷贝 prop 里的回调（EventHandler 实现了 Clone）
     let on_search = props.on_search;
-    
+
     let mut expanded = use_signal(|| false);
 
     rsx! {
@@ -112,7 +111,8 @@ pub async fn search(input: String) -> Result<Vec<AniData>, ServerFnError> {
             update_time: "2025/07/12".into()
         },
     ];
-    let filtered_ani = items.iter()
+    let filtered_ani = items
+        .iter()
         .filter(|item| item.title.contains(&input))
         .cloned()
         .collect::<Vec<AniData>>();

@@ -1,5 +1,5 @@
-use dioxus::prelude::*;
 use crate::client::route::Route;
+use dioxus::prelude::*;
 
 const FAVOR_CSS: Asset = asset!("/assets/styling/favorite.css");
 

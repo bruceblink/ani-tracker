@@ -1,12 +1,12 @@
-use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
-use crate::backend::utils::{clean_text, extract_number};
-use base64::{engine::general_purpose, Engine as _};
-use chrono::{Datelike, Local};
-use serde_json::Value;
-use std::collections::HashMap;
-use dioxus::logger::tracing::{error, info};
 use crate::backend::ApiResponse;
 use crate::backend::platforms::{AniItem, AniItemResult};
+use crate::backend::utils::date_utils::{get_today_slash, get_today_weekday};
+use crate::backend::utils::{clean_text, extract_number};
+use base64::{Engine as _, engine::general_purpose};
+use chrono::{Datelike, Local};
+use dioxus::logger::tracing::{error, info};
+use serde_json::Value;
+use std::collections::HashMap;
 
 pub async fn fetch_iqiyi_image(url: String) -> Result<String, String> {
     // 新建异步 Reqwest 客户端
@@ -45,10 +45,7 @@ pub async fn fetch_iqiyi_ani_data(url: String) -> Result<ApiResponse<AniItemResu
         .map_err(|e| e.to_string())?;
 
     // 2. 反序列化成 serde_json::Value
-    let json_value: Value = response
-        .json()
-        .await
-        .map_err(|e| e.to_string())?;
+    let json_value: Value = response.json().await.map_err(|e| e.to_string())?;
 
     // 3. 处理解析成 AniItemResult
     let result: AniItemResult = process_json_value(&json_value);

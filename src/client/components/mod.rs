@@ -4,12 +4,12 @@
 
 pub mod ani_list;
 
-pub mod search;
 mod ani_item;
+pub mod search;
 pub mod theme;
 
-use serde::{Deserialize, Serialize};
 pub use search::Search;
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, PartialEq, Deserialize, Serialize)]
 pub struct AniData {

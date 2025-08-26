@@ -32,10 +32,8 @@ pub fn AniItem(props: AniProps) -> Element {
     }
 }
 
-
 #[component]
 pub fn AniInfo(props: AniProps) -> Element {
-
     rsx! {
         div {
             class: "ani-info",
@@ -82,10 +80,8 @@ pub fn AniInfo(props: AniProps) -> Element {
     }
 }
 
-
 #[component]
 pub fn AniImage(image_url: String, title: String) -> Element {
-
     rsx! {
         img {
             src: "{image_url}",

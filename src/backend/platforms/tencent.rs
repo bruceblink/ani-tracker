@@ -1,17 +1,17 @@
-use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
+use crate::backend::ApiResponse;
+use crate::backend::platforms::{AniItem, AniItemResult};
+use crate::backend::utils::date_utils::{get_today_slash, get_today_weekday};
 use crate::backend::utils::extract_number;
 use crate::backend::utils::http_client::http_client;
-use base64::engine::general_purpose;
 use base64::Engine;
+use base64::engine::general_purpose;
+use dioxus::logger::tracing::warn;
+use dioxus::logger::tracing::{debug, info};
 use reqwest::Client;
 use scraper::{Html, Selector};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::error::Error;
-use dioxus::logger::tracing::{debug, info};
-use dioxus::logger::tracing::warn;
-use crate::backend::ApiResponse;
-use crate::backend::platforms::{AniItem, AniItemResult};
 
 pub async fn fetch_qq_image(url: String) -> Result<String, String> {
     // 新建异步 Reqwest 客户端
@@ -48,10 +48,7 @@ pub async fn fetch_qq_ani_data(url: String) -> Result<ApiResponse<AniItemResult>
         .send()
         .await
         .map_err(|e| e.to_string())?;
-    let text = resp
-        .text()
-        .await
-        .map_err(|e| e.to_string())?;
+    let text = resp.text().await.map_err(|e| e.to_string())?;
     debug!(
         "解析从 腾讯视频 获取到的 HTML，前 200 字符：\n{}",
         &text[..200.min(text.len())]

@@ -17,10 +17,9 @@ pub use favorite::Favorite;
 mod history;
 pub use history::History;
 
-
+mod app;
 mod navbar;
 mod notfound;
-mod app;
 pub use app::App;
 
 pub use notfound::NotFound;

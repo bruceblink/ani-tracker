@@ -1,13 +1,12 @@
-use dioxus::prelude::*;
-use crate::client::components::ani_item::AniItem;
 pub(crate) use crate::client::components::AniData;
+use crate::client::components::ani_item::AniItem;
+use dioxus::prelude::*;
 const ANILIST_CSS: Asset = asset!("/assets/styling/aniList.css");
 #[component]
 pub fn AniList(items: Vec<AniData>) -> Element {
-    
     rsx! {
         document::Link { rel: "stylesheet", href: ANILIST_CSS }
-        div { 
+        div {
             class: "ani-list",
                 // 使用 for 循环渲染列表项
             for data in items.iter() {

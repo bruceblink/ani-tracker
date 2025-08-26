@@ -9,7 +9,6 @@ use ani_tracker::entry_web;
 #[cfg(feature = "server")]
 use ani_tracker::entry_server;
 
-
 fn main() -> anyhow::Result<()> {
     #[cfg(not(feature = "server"))]
     return entry_web::run();
@@ -17,4 +16,3 @@ fn main() -> anyhow::Result<()> {
     #[cfg(feature = "server")]
     entry_server::run()
 }
-

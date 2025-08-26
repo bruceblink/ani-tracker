@@ -1,7 +1,7 @@
+use crate::client::components::Search;
 use crate::client::components::theme::ThemeToggle;
-use dioxus::prelude::*;
-use crate::client::components::{Search};
 use crate::client::route::Route;
+use dioxus::prelude::*;
 
 const NAVBAR_CSS: Asset = asset!("/assets/styling/navbar.css");
 
@@ -16,7 +16,6 @@ pub struct NavbarProps {
 /// routes will be rendered under the outlet inside this component
 #[component]
 pub fn Navbar(props: NavbarProps) -> Element {
-
     rsx! {
         document::Link { rel: "stylesheet", href: NAVBAR_CSS }
 
@@ -38,16 +37,16 @@ pub fn Navbar(props: NavbarProps) -> Element {
                         "☰"
                     }
 
-                    nav { 
+                    nav {
                         class: "nav-collapse",
-                        
+
                         Link { to: Route::Home {}, "Home" }
                         Link { to: Route::Favorite { id: 1 }, "Favorite" }
                         Link { to: Route::History { id: 1 }, "History" }
                     }
                 }
 
-                div { 
+                div {
                     class: "nav-right",
                     div { class: "search",
                         Search {

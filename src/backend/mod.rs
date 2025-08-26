@@ -1,10 +1,10 @@
 #[cfg(feature = "server")]
+mod db;
+#[cfg(feature = "server")]
 pub mod platforms;
 #[cfg(feature = "server")]
 pub mod timer_tasker;
 pub mod utils;
-#[cfg(feature = "server")]
-mod db;
 
 use serde::Serialize;
 
@@ -38,8 +38,8 @@ impl<T> ApiResponse<T> {
 /// 分页数据结构
 #[derive(Serialize, Debug)]
 pub struct PageData<T> {
-    pub items: Vec<T>,    // 当前页的数据
-    pub total: usize,     // 总条数
+    pub items: Vec<T>,  // 当前页的数据
+    pub total: usize,   // 总条数
     pub page: i64,      // 当前页码（1开始）
     pub page_size: i64, // 每页数量
 }

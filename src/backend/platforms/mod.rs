@@ -1,8 +1,8 @@
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 
-pub mod bilibili;
 pub mod agedm;
+pub mod bilibili;
 pub mod iqiyi;
 pub mod mikanani;
 pub mod tencent;

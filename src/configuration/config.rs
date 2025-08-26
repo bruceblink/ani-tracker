@@ -1,8 +1,8 @@
+use dioxus::logger::tracing::info;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
-use dioxus::logger::tracing::info;
 
 #[derive(Debug, Deserialize)]
 pub struct DataSource {
@@ -36,10 +36,8 @@ pub fn load_configuration(config_path: PathBuf) -> Result<AppConfig, config::Con
     settings.try_deserialize::<AppConfig>()
 }
 
-
 /// 初始化应用配置
 pub fn init_config() -> std::io::Result<PathBuf> {
-
     let app_path = std::env::current_dir().expect("Failed to determine the current directory"); // 应用程序的根目录
     // 配置文件目录
     let config_path = app_path.join("conf".to_string());
@@ -52,7 +50,10 @@ pub fn init_config() -> std::io::Result<PathBuf> {
 
         // 复制配置文件到目标目录
         if !config_file_in_resources.exists() {
-            return Err(std::io::Error::new(std::io::ErrorKind::NotFound, "Config file not found in resources"));
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::NotFound,
+                "Config file not found in resources",
+            ));
         }
 
         // 复制文件
@@ -113,8 +114,6 @@ impl DatabaseSettings {
     }
 }
 
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -156,7 +155,7 @@ mod tests {
         assert_eq!(drama_sources.len(), 1);
         assert_eq!(drama_sources[0].name, "腾讯视频".to_string());
     }
-    
+
     #[test]
     fn test_database_connection_string() {
         let settings = get_configuration().expect("Failed to read configuration.");

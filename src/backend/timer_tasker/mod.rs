@@ -1,21 +1,19 @@
-
 pub mod scheduler;
 pub mod task;
 
 pub mod commands;
 
-use std::path::PathBuf;
-use std::sync::Arc;
-use dioxus::logger::tracing::warn;
-use tokio::sync::mpsc;
 use crate::backend::timer_tasker::commands::build_cmd_map;
 use crate::backend::timer_tasker::scheduler::Scheduler;
-use crate::backend::timer_tasker::task::{build_tasks_from_meta, TaskMeta, TaskResult};
+use crate::backend::timer_tasker::task::{TaskMeta, TaskResult, build_tasks_from_meta};
 use crate::configuration::config::load_configuration;
-
+use dioxus::logger::tracing::warn;
+use std::path::PathBuf;
+use std::sync::Arc;
+use tokio::sync::mpsc;
 
 ///从配置文件加载定时作业的配置数据
-pub fn load_timer_tasks_config(config_path: PathBuf) -> Vec<TaskMeta>{
+pub fn load_timer_tasks_config(config_path: PathBuf) -> Vec<TaskMeta> {
     let configuration = load_configuration(config_path).expect("Failed to read configuration.");
     let anime_sources = configuration
         .datasource
@@ -24,15 +22,13 @@ pub fn load_timer_tasks_config(config_path: PathBuf) -> Vec<TaskMeta>{
 
     let mut tasks: Vec<TaskMeta> = Vec::new();
     for datasource in anime_sources {
-        tasks.push(
-            TaskMeta {
-                name: datasource.name.clone(),
-                cron_expr: datasource.cron_expr.clone(),
-                cmd: datasource.cmd.clone(),
-                arg: datasource.url.clone(),
-                retry_times: datasource.retry_times,
-            }
-        );
+        tasks.push(TaskMeta {
+            name: datasource.name.clone(),
+            cron_expr: datasource.cron_expr.clone(),
+            cmd: datasource.cmd.clone(),
+            arg: datasource.url.clone(),
+            retry_times: datasource.retry_times,
+        });
     }
     tasks
 }
@@ -52,7 +48,6 @@ pub async fn start_async_timer_task(config_path: PathBuf) {
     // 6) 创建 mpsc channel 用于接收 TaskResult
     let (tx, mut rx) = mpsc::channel::<TaskResult>(128);
 
-
     // 8) 启动结果接收器（异步）
     tokio::spawn({
         async move {
@@ -61,7 +56,7 @@ pub async fn start_async_timer_task(config_path: PathBuf) {
                     //let db = state_for_loop.db.clone(); // Arc<SqlitePool>
                     tokio::spawn(async move {
                         //if let Err(e) = save_ani_item_data_db(db, ani_item_result).await {
-                        warn!("task {:?} 保存失败",ani_item_result);
+                        warn!("task {:?} 保存失败", ani_item_result);
                         //}
                     });
                 }
@@ -77,4 +72,3 @@ pub async fn start_async_timer_task(config_path: PathBuf) {
         }
     });
 }
-
