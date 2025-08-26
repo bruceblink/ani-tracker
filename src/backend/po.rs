@@ -63,7 +63,7 @@ pub struct AniWatch {
     pub watched_time: chrono::DateTime<Utc>,
 }
 
-#[derive(Serialize, Debug, Clone ,FromRow)]
+#[derive(Serialize, Debug, Clone, FromRow)]
 #[serde(rename_all = "camelCase")]
 pub struct AniHistoryInfo {
     id: i64,

@@ -1,8 +1,8 @@
 #[cfg(feature = "server")]
 mod server_tests {
+    use ani_tracker::backend::db::postgresql;
     use ani_tracker::configuration::config::get_configuration;
     use sqlx::{Connection, PgConnection};
-    use ani_tracker::backend::db::postgresql;
 
     #[tokio::test]
     async fn test_connect_db() -> Result<(), sqlx::Error> {
