@@ -66,6 +66,53 @@ pub fn init_config() -> std::io::Result<PathBuf> {
     Ok(config_path)
 }
 
+#[derive(Deserialize)]
+pub struct Settings {
+    pub database: DatabaseSettings,
+}
+
+#[derive(Deserialize)]
+pub struct DatabaseSettings {
+    pub username: String,
+    pub password: String,
+    pub port: u16,
+    pub host: String,
+    pub database_name: String,
+}
+
+pub fn get_configuration() -> Result<Settings, config::ConfigError> {
+    let base_path = std::env::current_dir().expect("Failed to determine the current directory");
+    let configuration_directory = base_path.join("conf".to_string());
+
+    let settings = config::Config::builder()
+        .add_source(config::File::from(
+            configuration_directory.join("configuration.yaml".to_string()),
+        ))
+        .add_source(
+            config::Environment::with_prefix("APP")
+                .prefix_separator("_")
+                .separator("__"),
+        )
+        .build()?;
+    settings.try_deserialize::<Settings>()
+}
+
+impl DatabaseSettings {
+    pub fn connection_string(&self) -> String {
+        format!(
+            "postgres://{}:{}@{}:{}/{}",
+            self.username, self.password, self.host, self.port, self.database_name
+        )
+    }
+
+    pub fn connection_string_without_db(&self) -> String {
+        format!(
+            "postgres://{}:{}@{}:{}",
+            self.username, self.password, self.host, self.port
+        )
+    }
+}
+
 
 
 #[cfg(test)]
@@ -108,5 +155,23 @@ mod tests {
             .expect("Missing drama category");
         assert_eq!(drama_sources.len(), 1);
         assert_eq!(drama_sources[0].name, "腾讯视频".to_string());
+    }
+    
+    #[test]
+    fn test_database_connection_string() {
+        let settings = get_configuration().expect("Failed to read configuration.");
+        let db_settings = settings.database;
+
+        let connection_string = db_settings.connection_string();
+        assert_eq!(
+            connection_string,
+            "postgres://postgres:password@localhost:5432/ani_tracker"
+        );
+
+        let connection_string_without_db = db_settings.connection_string_without_db();
+        assert_eq!(
+            connection_string_without_db,
+            "postgres://postgres:password@localhost:5432"
+        );
     }
 }

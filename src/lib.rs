@@ -1,5 +1,5 @@
 pub mod backend;
-mod configuration;
+pub mod configuration;
 
 #[cfg(not(feature = "server"))]
 pub mod entry_web;
