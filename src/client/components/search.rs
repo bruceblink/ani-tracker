@@ -12,7 +12,7 @@ pub struct SearchProps {
 #[component]
 pub fn Search(props: SearchProps) -> Element {
     // 拷贝 prop 里的回调（EventHandler 实现了 Clone）
-    let on_search = props.on_search.clone();
+    let on_search = props.on_search;
     
     let mut expanded = use_signal(|| false);
 

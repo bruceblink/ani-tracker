@@ -12,8 +12,8 @@ pub fn Home() -> Element {
 
     use_effect(move || {
         let current_query = query();
-        let mut results = results.clone();
-        let mut loading = loading.clone();
+        let mut results = results;
+        let mut loading = loading;
 
         spawn(async move {
             loading.set(true); // 开始加载，设置 loading 为 true

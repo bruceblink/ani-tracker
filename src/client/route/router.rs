@@ -39,7 +39,7 @@ pub enum Route {
 #[component]
 pub fn AppLayout() -> Element {
     let mut query = use_signal(|| "".to_string());
-    provide_context(query.clone());  // 👈 将 query提示为全局 提供给子组件
+    provide_context(query);  // 👈 将 query提示为全局 提供给子组件
     rsx! {
         div {
             class: "App",
