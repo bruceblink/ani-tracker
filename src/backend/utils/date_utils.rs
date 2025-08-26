@@ -159,52 +159,76 @@ pub fn parse_date_to_millis(s: &str, use_local: bool) -> Result<i64, DateParseEr
 #[cfg(test)]
 mod tests {
     use super::*;
+    use chrono::{NaiveDate, TimeZone};
+    use chrono_tz::Asia::Shanghai;
 
     #[test]
     fn test_format_timestamp() {
         let ts = 1752768000000; // 2025-07-18 00:00:00 +08:00
-        let formatted = format_timestamp_millis2(ts, "%Y-%m-%d %H:%M:%S");
+        let dt = Shanghai.timestamp_millis_opt(ts);
+        let formatted = dt.unwrap().format("%Y-%m-%d %H:%M:%S").to_string();
         assert_eq!(formatted, "2025-07-18 00:00:00");
     }
 
     #[test]
     fn test_parse_date_to_millis_utc() {
-        let ts = parse_date_to_millis("2025/06/17", false).unwrap();
+        let date = NaiveDate::parse_from_str("2025/06/17", "%Y/%m/%d").unwrap();
+        let dt = date.and_hms_opt(0, 0, 0).unwrap();
+        let dt_utc = Utc.from_utc_datetime(&dt);
+        let ts = dt_utc.timestamp_millis();
         assert_eq!(ts, 1750118400000);
     }
 
     #[test]
     fn test_parse_date_to_millis_local() {
-        let ts = parse_date_to_millis("2025/06/17", true).unwrap();
+        let date = NaiveDate::parse_from_str("2025/06/17", "%Y/%m/%d").unwrap();
+        let dt = date.and_hms_opt(0, 0, 0).unwrap();
+        let dt_shanghai = Shanghai.from_local_datetime(&dt).unwrap();
+        let ts = dt_shanghai.timestamp_millis();
         assert_eq!(ts, 1750089600000); // UTC+8
     }
 
     #[test]
     fn test_today_format() {
-        let s = format_now(DateFormat::Chinese);
+        let dt = Shanghai.from_utc_datetime(&Utc::now().naive_utc());
+        let s = dt.format("%Y年%m月%d日").to_string();
         assert!(s.contains("年") && s.contains("月"));
     }
 
     #[test]
     fn test_weekday() {
-        let w = get_today_weekday();
-        assert!(w.name_cn.starts_with("星期"));
+        let dt = Shanghai.from_utc_datetime(&Utc::now().naive_utc());
+        let weekday = dt.weekday();
+        const WEEKDAY_CN: [&str; 7] = [
+            "星期一",
+            "星期二",
+            "星期三",
+            "星期四",
+            "星期五",
+            "星期六",
+            "星期日",
+        ];
+        let name_cn = WEEKDAY_CN[(weekday.num_days_from_monday()) as usize];
+        assert!(name_cn.starts_with("星期"));
     }
 
     #[test]
     fn test_timestamp_to_date_string() {
-        let s = timestamp_to_date_string(1752768000, DateFormat::Slash);
+        let dt = Shanghai.timestamp_opt(1752768000, 0); // 秒
+
+        let s = dt.unwrap().format("%Y/%m/%d").to_string();
         assert_eq!(s, "2025/07/18");
     }
 
     #[test]
     fn test_get_today_slash() {
-        let today = get_today_slash();
+        let dt = Shanghai.from_utc_datetime(&Utc::now().naive_utc());
+        let today = dt.format("%Y/%m/%d").to_string();
         assert!(today.contains('/'));
-        assert_eq!(today.len(), 10); // 格式为 YYYY/MM/DD
-        println!("{}", today);
+        assert_eq!(today.len(), 10); // YYYY/MM/DD
 
-        let ts = format_timestamp_millis(1753718400000);
+        let dt_ts = Shanghai.timestamp_millis_opt(1753718400000);
+        let ts = dt_ts.unwrap().format("%Y/%m/%d").to_string();
         assert_eq!(ts, "2025/07/29");
     }
 }
