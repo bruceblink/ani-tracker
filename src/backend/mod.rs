@@ -1,10 +1,11 @@
-#[cfg(feature = "server")]
-mod db;
+pub mod db;
 #[cfg(feature = "server")]
 pub mod platforms;
 #[cfg(feature = "server")]
 pub mod timer_tasker;
 pub mod utils;
+#[cfg(feature = "server")]
+pub use db::get_pg_pool;
 
 use serde::Serialize;
 
