@@ -60,7 +60,7 @@ pub async fn get_ani_info_by_id(id: i64) -> Result<Ani> {
 }
 
 /// 查询所有动漫信息
-pub async fn list_all_ani_info() -> Result<Vec<Ani>> {
+pub async fn list_all_ani_info(title: String) -> Result<Vec<Ani>> {
     // 构造带绑定参数的 QueryAs
     let query = sqlx::query_as::<_, Ani>(
         r#"
@@ -73,8 +73,12 @@ pub async fn list_all_ani_info() -> Result<Vec<Ani>> {
                     update_time,
                     platform
                 FROM ani_info
-                "#,
-    );
+                WHERE
+                  title LIKE '%' || $1 || '%'
+                ORDER BY update_time DESC
+            ;"#,
+    )
+    .bind(title);
     // 调用通用的 run_query
     let list = run_query(get_pg_pool(), query).await?;
     Ok(list)
