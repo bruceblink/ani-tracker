@@ -13,7 +13,7 @@ pub fn run() -> anyhow::Result<()> {
     setup_server_api_url();
 
     // 启动前端 Dioxus app
-    launch(crate::views::App);
+    launch(crate::client::views::App);
 
     Ok(())
 }

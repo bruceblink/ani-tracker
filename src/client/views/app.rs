@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
 
-use crate::route::Route;
+use crate::client::route::Route;
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 // The asset macro also minifies some assets like CSS and JS to make bundled smaller
 const MAIN_CSS: Asset = asset!("/assets/styling/main.css");

@@ -3,7 +3,7 @@ use dioxus::core_macro::{component, rsx};
 use dioxus::dioxus_core::Element;
 use dioxus::hooks::use_signal;
 
-use crate::views::{Favorite, History, Home, Navbar, NotFound};
+use crate::client::views::{Favorite, History, Home, Navbar, NotFound};
 /// The Route enum is used to define the structure of internal routes in our app. All route enums need to derive
 /// the [`Routable`] trait, which provides the necessary methods for the route to work.
 ///

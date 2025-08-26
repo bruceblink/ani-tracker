@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
-use crate::components::ani_list::{AniData, AniList};
-use crate::components::search::search;
+use crate::client::components::ani_list::{AniData, AniList};
+use crate::client::components::search::search;
 
 const HOME_CSS: Asset = asset!("/assets/styling/home.css");
 /// The Home page component that will be rendered when the current route is `[Route::Home]`

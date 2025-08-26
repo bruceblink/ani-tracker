@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use crate::components::ani_list::AniData;
+use crate::client::components::ani_list::AniData;
 const SEARCH_CSS: Asset = asset!("/assets/styling/search.css");
 
 

@@ -1,7 +1,3 @@
-mod components;
-/// Define a views module that contains the UI for all Layouts and Routes for our app.
-pub mod views;
-mod route;
 pub mod backend;
 mod configuration;
 
@@ -10,3 +6,4 @@ pub mod entry_web;
 
 #[cfg(feature = "server")]
 pub mod entry_server;
+mod client;

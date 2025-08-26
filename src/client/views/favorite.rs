@@ -1,37 +1,37 @@
 use dioxus::prelude::*;
-use crate::route::Route;
+use crate::client::route::Route;
 
-const HIST_CSS: Asset = asset!("/assets/styling/history.css");
+const FAVOR_CSS: Asset = asset!("/assets/styling/favorite.css");
 
 /// The Blog page component that will be rendered when the current route is `[Route::Blog]`
 ///
 /// The component takes a `id` prop of type `i32` from the route enum. Whenever the id changes, the component function will be
 /// re-run and the rendered HTML will be updated.
 #[component]
-pub fn History(id: i32) -> Element {
+pub fn Favorite(id: i32) -> Element {
     rsx! {
-        document::Link { rel: "stylesheet", href: HIST_CSS }
+        document::Link { rel: "stylesheet", href: FAVOR_CSS }
 
         div {
-            id: "history",
+            id: "favorite",
 
             // Content
-            h1 { "This is history #{id}!" }
-            p { "In history #{id}, we show how the Dioxus route works and how URL parameters can be passed as props to our route components." }
+            h1 { "This is favorite #{id}!" }
+            p { "In favorite #{id}, we show how the Dioxus route works and how URL parameters can be passed as props to our route components." }
 
             // Navigation links
             // The `Link` component lets us link to other routes inside our app. It takes a `to` prop of type `Route` and
             // any number of child nodes.
             Link {
                 // The `to` prop is the route that the link should navigate to. We can use the `Route` enum to link to the
-                // history page with the id of -1. Since we are using an enum instead of a string, all of the routes will be checked
+                // blog page with the id of -1. Since we are using an enum instead of a string, all of the routes will be checked
                 // at compile time to make sure they are valid.
-                to: Route::History { id: id - 1 },
+                to: Route::Favorite { id: id - 1 },
                 "Previous"
             }
             span { " <---> " }
             Link {
-                to: Route::History { id: id + 1 },
+                to: Route::Favorite { id: id + 1 },
                 "Next"
             }
         }

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
-use crate::components::ani_item::AniItem;
-pub(crate) use crate::components::AniData;
+use crate::client::components::ani_item::AniItem;
+pub(crate) use crate::client::components::AniData;
 const ANILIST_CSS: Asset = asset!("/assets/styling/aniList.css");
 #[component]
 pub fn AniList(items: Vec<AniData>) -> Element {

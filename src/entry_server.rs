@@ -16,7 +16,7 @@ pub fn run() -> anyhow::Result<()> {
     });
 
     // 启动 Dioxus 全栈 app（SSR/服务端渲染）
-    launch(crate::views::App);
+    launch(crate::client::views::App);
 
     // 阻塞主线程，保持 runtime 存活
     rt.block_on(async {
