@@ -1,6 +1,6 @@
-use crate::utils::date_utils::{get_today_weekday, get_today_slash};
-use crate::utils::extract_number;
-use crate::utils::http_client::http_client;
+use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
+use crate::backend::utils::extract_number;
+use crate::backend::utils::http_client::http_client;
 use base64::engine::general_purpose;
 use base64::Engine;
 use reqwest::Client;

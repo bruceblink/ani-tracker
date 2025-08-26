@@ -2,6 +2,7 @@
 pub mod platforms;
 #[cfg(feature = "server")]
 pub mod timer_tasker;
+pub mod utils;
 
 use serde::Serialize;
 

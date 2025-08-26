@@ -1,5 +1,5 @@
 
-use crate::utils::date_utils::{get_today_weekday, get_today_slash};
+use crate::backend::utils::date_utils::{get_today_weekday, get_today_slash};
 use base64::{engine::general_purpose, Engine as _};
 use reqwest::Url;
 use scraper::{Html, Selector};

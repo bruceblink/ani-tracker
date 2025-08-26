@@ -1,7 +1,6 @@
 mod components;
 /// Define a views module that contains the UI for all Layouts and Routes for our app.
 pub mod views;
-mod utils;
 mod route;
 pub mod backend;
 mod configuration;
