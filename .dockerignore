@@ -11,6 +11,7 @@ pnpm-lock.yaml
 
 # 忽略 Rust 构建产物
 target
+tests
 Cargo.lock
 
 # 忽略 Dockerfile 本身（可选）
