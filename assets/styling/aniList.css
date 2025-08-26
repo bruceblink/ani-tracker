@@ -24,6 +24,7 @@
         flex-direction: row;
         justify-content: center;
     }
+
     .ani-list > div {
         width: clamp(200px, 45vw, 300px);
     }
@@ -35,6 +36,7 @@
         flex-direction: row;
         justify-content: center; /* 末尾那一行不满时也是居中 */
     }
+
     .ani-list > div {
         width: clamp(240px, 22vw, 360px);
     }

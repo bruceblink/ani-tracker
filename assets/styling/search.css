@@ -1,79 +1,79 @@
 /* 外层容器，内联显示并垂直居中 */
 .search-wrap {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  gap: 8px;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    gap: 8px;
 }
 
 /* 放大镜按钮（初始状态）*/
 .search-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  border: none;
-  display: inline-grid;
-  place-items: center;
-  cursor: pointer;
-  background: transparent;
-  padding: 0;
-  transition: background 150ms ease, transform 120ms ease;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    background: transparent;
+    padding: 0;
+    transition: background 150ms ease, transform 120ms ease;
 }
 
 .search-btn svg {
-  stroke: var(--link-color); /* 使用主题链接颜色 */
-  fill: none; /* 如果不需要填充，设置为 none */
-  transition: stroke 0.3s ease; /* 添加过渡效果 */
+    stroke: var(--link-color); /* 使用主题链接颜色 */
+    fill: none; /* 如果不需要填充，设置为 none */
+    transition: stroke 0.3s ease; /* 添加过渡效果 */
 }
 
 .search-btn:hover svg {
-  stroke: var(--link-hover); /* 悬停时改变颜色 */
+    stroke: var(--link-hover); /* 悬停时改变颜色 */
 }
 
 /* 输入框（收起态）*/
 .search-input {
-  width: 0;
-  padding: 0;
-  border: 1px solid transparent;
-  border-radius: 20px;
-  outline: none;
-  transition: width 220ms ease, padding 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
-  font-size: 14px;
-  box-sizing: border-box;
-  background: var(--search-bg);
-  color: var(--search-close-color);
+    width: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    outline: none;
+    transition: width 220ms ease, padding 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: var(--search-bg);
+    color: var(--search-close-color);
 }
 
 /* 输入框（展开态）*/
 .search-input.expanded:hover {
-  width: 220px;           /* 展开宽度，可按需修改 */
-  padding: 8px 12px;
-  border-color: var(--link-hover);
-  box-shadow: 0 6px 18px var(--search-box-shadow);
+    width: 220px; /* 展开宽度，可按需修改 */
+    padding: 8px 12px;
+    border-color: var(--link-hover);
+    box-shadow: 0 6px 18px var(--search-box-shadow);
 }
 
 .search-input.expanded {
-  width: 220px;           /* 展开宽度，可按需修改 */
-  padding: 8px 12px;
-  border-color: var(--search-border);
-  box-shadow: 0 6px 18px var(--search-box-shadow);
+    width: 220px; /* 展开宽度，可按需修改 */
+    padding: 8px 12px;
+    border-color: var(--search-border);
+    box-shadow: 0 6px 18px var(--search-box-shadow);
 }
 
 /* 关闭按钮（展开时显示）*/
 .search-close {
-  margin-left: 4px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 1;
-  padding: 6px;
-  color: var(--search-close-color);
+    margin-left: 4px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    padding: 6px;
+    color: var(--search-close-color);
 }
 
 /* 在窄屏上把展开宽度缩小 */
 @media (max-width: 480px) {
-  .search-input.expanded {
-    width: 140px;
-  }
+    .search-input.expanded {
+        width: 140px;
+    }
 }

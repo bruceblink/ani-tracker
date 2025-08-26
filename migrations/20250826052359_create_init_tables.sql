@@ -1,40 +1,43 @@
 -- 1. 创建表
 --------------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS ani_info (
-                                        id           SERIAL PRIMARY KEY,
-                                        title        TEXT NOT NULL,
-                                        update_count TEXT,
-                                        update_info  TEXT,
-                                        image_url    TEXT NOT NULL,
-                                        detail_url   TEXT NOT NULL,
-                                        update_time  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 仅插入时写入
-                                        platform     TEXT NOT NULL,
-                                        CONSTRAINT uniq_ani_info UNIQUE(title, platform, update_count)
+CREATE TABLE IF NOT EXISTS ani_info
+(
+    id           SERIAL PRIMARY KEY,
+    title        TEXT        NOT NULL,
+    update_count TEXT,
+    update_info  TEXT,
+    image_url    TEXT        NOT NULL,
+    detail_url   TEXT        NOT NULL,
+    update_time  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 仅插入时写入
+    platform     TEXT        NOT NULL,
+    CONSTRAINT uniq_ani_info UNIQUE (title, platform, update_count)
 );
 
-CREATE TABLE IF NOT EXISTS ani_collect (
-                                           id           SERIAL PRIMARY KEY,
-                                           user_id      TEXT DEFAULT '',
-                                           ani_item_id  INTEGER NOT NULL,
-                                           ani_title    TEXT NOT NULL,
-                                           collect_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 收藏时的时间
-                                           is_watched   BOOLEAN NOT NULL DEFAULT FALSE,                 -- 是否已观看
-                                           CONSTRAINT uniq_ani_collect UNIQUE(user_id, ani_item_id),
-                                           CONSTRAINT fk_ani_item FOREIGN KEY (ani_item_id)
-                                               REFERENCES ani_info(id)
-                                               ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS ani_collect
+(
+    id           SERIAL PRIMARY KEY,
+    user_id      TEXT                 DEFAULT '',
+    ani_item_id  INTEGER     NOT NULL,
+    ani_title    TEXT        NOT NULL,
+    collect_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 收藏时的时间
+    is_watched   BOOLEAN     NOT NULL DEFAULT FALSE,             -- 是否已观看
+    CONSTRAINT uniq_ani_collect UNIQUE (user_id, ani_item_id),
+    CONSTRAINT fk_ani_item FOREIGN KEY (ani_item_id)
+        REFERENCES ani_info (id)
+        ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS ani_watch_history (
-                                                 id           SERIAL PRIMARY KEY,
-                                                 user_id      TEXT DEFAULT '',
-                                                 ani_item_id  INTEGER NOT NULL,
-                                                 watched_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 观看时的时间
-                                                 CONSTRAINT uniq_ani_watch UNIQUE(user_id, ani_item_id),
-                                                 CONSTRAINT fk_ani_watch FOREIGN KEY (ani_item_id)
-                                                     REFERENCES ani_info(id)
-                                                     ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS ani_watch_history
+(
+    id           SERIAL PRIMARY KEY,
+    user_id      TEXT                 DEFAULT '',
+    ani_item_id  INTEGER     NOT NULL,
+    watched_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 观看时的时间
+    CONSTRAINT uniq_ani_watch UNIQUE (user_id, ani_item_id),
+    CONSTRAINT fk_ani_watch FOREIGN KEY (ani_item_id)
+        REFERENCES ani_info (id)
+        ON DELETE CASCADE
 );
 
 --------------------------------------------------------------------------------
@@ -74,19 +77,19 @@ COMMENT ON COLUMN ani_watch_history.watched_time IS '观看时间';
 --------------------------------------------------------------------------------
 
 CREATE INDEX IF NOT EXISTS idx_ani_info_update_time
-    ON ani_info(update_time);
+    ON ani_info (update_time);
 
 CREATE INDEX IF NOT EXISTS idx_ani_collect_item_time
-    ON ani_collect(ani_item_id, collect_time);
+    ON ani_collect (ani_item_id, collect_time);
 
 CREATE INDEX IF NOT EXISTS idx_ani_collect_title
-    ON ani_collect(ani_title);
+    ON ani_collect (ani_title);
 
 CREATE INDEX IF NOT EXISTS idx_ani_watch_history_item_time
-    ON ani_watch_history(ani_item_id, watched_time);
+    ON ani_watch_history (ani_item_id, watched_time);
 
 CREATE INDEX IF NOT EXISTS idx_ani_watch_history_time
-    ON ani_watch_history(watched_time);
+    ON ani_watch_history (watched_time);
 
 
 --------------------------------------------------------------------------------
@@ -94,7 +97,8 @@ CREATE INDEX IF NOT EXISTS idx_ani_watch_history_time
 --------------------------------------------------------------------------------
 
 -- 先删除旧触发器和函数，避免重复执行报错
-DO $$
+DO
+$$
     BEGIN
         IF EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'trg_after_insert_watch') THEN
             DROP TRIGGER trg_after_insert_watch ON ani_watch_history;
@@ -108,7 +112,8 @@ $$;
 
 -- 创建触发器函数
 CREATE OR REPLACE FUNCTION trg_after_insert_watch_func()
-    RETURNS TRIGGER AS $$
+    RETURNS TRIGGER AS
+$$
 BEGIN
     UPDATE ani_collect
     SET is_watched = TRUE
@@ -120,6 +125,7 @@ $$ LANGUAGE plpgsql;
 
 -- 创建触发器
 CREATE TRIGGER trg_after_insert_watch
-    AFTER INSERT ON ani_watch_history
+    AFTER INSERT
+    ON ani_watch_history
     FOR EACH ROW
 EXECUTE FUNCTION trg_after_insert_watch_func();

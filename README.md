@@ -2,7 +2,8 @@
 
 ## 项目简介
 
-该项目为：[ani-todo-app](https://github.com/bruceblink/ani-todo-app) 项目使用Rust的Dioxus重新实现的全栈版本(包含Web端和桌面端)[ani-tracker](https://ani-tracker.fly.dev/)，旨在提供一个高效、易用的个人追番助手。它可以帮助用户追踪各大视频平台的动漫更新信息，并提供便捷的查询和管理功能。
+该项目为：[ani-todo-app](https://github.com/bruceblink/ani-todo-app) 项目使用Rust的Dioxus重新实现的全栈版本(
+包含Web端和桌面端)[ani-tracker](https://ani-tracker.fly.dev/)，旨在提供一个高效、易用的个人追番助手。它可以帮助用户追踪各大视频平台的动漫更新信息，并提供便捷的查询和管理功能。
 
 ## 功能特点
 
@@ -29,11 +30,11 @@
        cargo binstall dioxus-cli
     ```
 3. 开发环境运行项目：
-    运行以下命令启动开发服务器(Web端应用)：
+   运行以下命令启动开发服务器(Web端应用)：
     ```bash
        dx serve --platform web
    ```
-    运行其他平台, 使用 `--platform platform` 标志. 例如运行桌面端应用：
+   运行其他平台, 使用 `--platform platform` 标志. 例如运行桌面端应用：
    ```bash
       dx serve --platform desktop
    ```
@@ -41,14 +42,13 @@
     ```bash
        dx build --platform web --release 
    ```
-    构建其他平台, 使用 `--platform platform` 标志. 例如构建桌面端应用：
+   构建其他平台, 使用 `--platform platform` 标志. 例如构建桌面端应用：
    ```bash
       dx build --platform desktop --release
    ```
 
 5. 部署到 Fly.io：
-    使用Github账号登录到[Fly.io](https://fly.io/dashboard/likanug/new)选择你要部署代码仓库即可，一键部署应用
-    
+   使用Github账号登录到[Fly.io](https://fly.io/dashboard/likanug/new)选择你要部署代码仓库即可，一键部署应用
 
 ## 项目文件说明
 
