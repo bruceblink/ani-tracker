@@ -1,4 +1,9 @@
 [application]
+name = "ani-tracker"
+
+[bundle]
+identifier = "top.likanug.ani-tracker"
+publisher = "likanug"
 
 [web.app]
 
