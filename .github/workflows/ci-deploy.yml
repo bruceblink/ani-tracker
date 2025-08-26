@@ -113,22 +113,21 @@ jobs:
       - name: Run Clippy
         run: cargo clippy -- -D warnings
 
-      # 1️⃣3️⃣ 运行单元测试
-      - name: Run tests
-        run: cargo test
+      # 1️⃣3️⃣ 运行单元测试（禁用 GUI 相关特性，避免 soup3-sys 报错）
+      - name: Run tests (backend only)
+        run: cargo test --no-default-features --features "postgres,rustls"
 
       # 1️⃣4️⃣ 检查 SQLX 查询是否过期
       - name: Check SQLX queries
         run: cargo sqlx prepare --workspace --check -- --all-targets
 
-      # 1️⃣5️⃣ 生成代码覆盖率
+      # 1️⃣5️⃣ 生成代码覆盖率（禁用 GUI 相关特性）
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
       - name: Generate coverage report
         run: |
-          # 使用 CARGO_FEATURES 禁用默认 GUI 特性
-          cargo llvm-cov --all-features --workspace --no-default-features --lcov --output-path lcov.info
-          cargo llvm-cov report --html --output-dir coverage
+          cargo llvm-cov --no-default-features --features "postgres,rustls" --all-features --workspace --lcov --output-path lcov.info
+          cargo llvm-cov report --no-default-features --features "postgres,rustls" --all-features --workspace --html --output-dir coverage
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage report"
