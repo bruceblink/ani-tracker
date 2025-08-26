@@ -7,7 +7,7 @@ const HOME_CSS: Asset = asset!("/assets/styling/home.css");
 #[component]
 pub fn Home() -> Element {
     let query = consume_context::<Signal<String>>();
-    let results = use_signal(|| Vec::<AniData>::new());
+    let results = use_signal(Vec::<AniData>::new);
     let loading = use_signal(|| true); // 添加一个 loading 状态
 
     use_effect(move || {
