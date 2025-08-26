@@ -127,7 +127,7 @@ jobs:
       - name: Generate coverage report
         run: |
           cargo llvm-cov --features server --lcov --output-path lcov.info
-          cargo llvm-cov report --features server --html --output-dir coverage
+          cargo llvm-cov report --html --output-dir coverage
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage report"
