@@ -2,6 +2,7 @@
 mod server_tests {
     use ani_tracker::configuration::config::get_configuration;
     use sqlx::{Connection, PgConnection};
+    use ani_tracker::backend::db::postgresql;
 
     #[tokio::test]
     async fn test_connect_db() -> Result<(), sqlx::Error> {
@@ -29,7 +30,7 @@ mod server_tests {
 
     #[tokio::test]
     async fn test_db_pool() -> Result<(), sqlx::Error> {
-        let connect_pool = ani_tracker::backend::get_pg_pool();
+        let connect_pool = postgresql::get_pg_pool();
         let data = sqlx::query!("SELECT * FROM ani_info LIMIT 1")
             .fetch_optional(connect_pool)
             .await?;
