@@ -64,7 +64,7 @@ jobs:
         with:
           components: rustfmt,clippy,llvm-tools-preview
 
-      # 5️⃣ 安装系统依赖（Postgres 客户端 + GTK/GDK 库）
+      # 5️⃣ 安装系统依赖（Postgres 客户端 + pkg-config）
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -74,8 +74,7 @@ jobs:
             libglib2.0-dev \
             libcairo2-dev \
             libgdk-pixbuf2.0-dev \
-            libgtk-3-dev \
-            libsoup3.0-dev
+            libgtk-3-dev
 
       # 6️⃣ 安装 sqlx-cli，用于数据库迁移和 SQL 检查
       - name: Install sqlx-cli
@@ -84,7 +83,7 @@ jobs:
       # 7️⃣ 等待 Postgres 服务启动完成
       - name: Wait for Postgres to be ready
         run: |
-          for i in {1..30}; do
+          for i in {1..20}; do
             PGPASSWORD=password psql -h localhost -U postgres -c '\l' && break
             echo "Waiting for Postgres..."
             sleep 2
@@ -123,10 +122,13 @@ jobs:
         run: cargo sqlx prepare --workspace --check -- --all-targets
 
       # 1️⃣5️⃣ 生成代码覆盖率
-      - name: Generate coverage
+      - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
-      - run: cargo llvm-cov --all-features --workspace --lcov --output-path lcov.info
-      - run: cargo llvm-cov report --html --output-dir coverage
+      - name: Generate coverage report
+        run: |
+          # 使用 CARGO_FEATURES 禁用默认 GUI 特性
+          cargo llvm-cov --all-features --workspace --no-default-features --lcov --output-path lcov.info
+          cargo llvm-cov report --html --output-dir coverage
       - uses: actions/upload-artifact@v4
         with:
           name: "Coverage report"
