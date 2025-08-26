@@ -72,7 +72,9 @@ jobs:
       - name: Wait for Postgres to be ready
         run: |
           for i in {1..20}; do
-            PGPASSWORD=password psql -h localhost -U postgres -c '\l' && break
+            if PGPASSWORD=password pg_isready -h localhost -U postgres; then
+              break
+            fi
             echo "Waiting for Postgres..."
             sleep 2
           done
