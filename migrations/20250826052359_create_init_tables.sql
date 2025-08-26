@@ -3,7 +3,7 @@
 
 CREATE TABLE IF NOT EXISTS ani_info
 (
-    id           SERIAL PRIMARY KEY,
+    id           BIGSERIAL PRIMARY KEY,
     title        TEXT        NOT NULL,
     update_count TEXT,
     update_info  TEXT,
@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS ani_info
 
 CREATE TABLE IF NOT EXISTS ani_collect
 (
-    id           SERIAL PRIMARY KEY,
+    id           BIGSERIAL PRIMARY KEY,
     user_id      TEXT                 DEFAULT '',
-    ani_item_id  INTEGER     NOT NULL,
+    ani_item_id  BIGINT     NOT NULL,
     ani_title    TEXT        NOT NULL,
     collect_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 收藏时的时间
     is_watched   BOOLEAN     NOT NULL DEFAULT FALSE,             -- 是否已观看
@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS ani_collect
 
 CREATE TABLE IF NOT EXISTS ani_watch_history
 (
-    id           SERIAL PRIMARY KEY,
+    id           BIGSERIAL PRIMARY KEY,
     user_id      TEXT                 DEFAULT '',
-    ani_item_id  INTEGER     NOT NULL,
+    ani_item_id  BIGINT     NOT NULL,
     watched_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, -- 观看时的时间
     CONSTRAINT uniq_ani_watch UNIQUE (user_id, ani_item_id),
     CONSTRAINT fk_ani_watch FOREIGN KEY (ani_item_id)
