@@ -114,8 +114,8 @@ jobs:
         run: cargo clippy -- -D warnings
 
       # 1️⃣3️⃣ 运行单元测试（禁用 GUI 相关特性，避免 soup3-sys 报错）
-      - name: Run tests (backend only)
-        run: cargo test --no-default-features --features "postgres,rustls"
+      - name: Run tests
+        run: cargo test
 
       # 1️⃣4️⃣ 检查 SQLX 查询是否过期
       - name: Check SQLX queries
