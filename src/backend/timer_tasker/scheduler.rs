@@ -4,7 +4,7 @@ use dioxus::logger::tracing::log::{info, warn};
 use tokio::sync::{mpsc, Notify, Semaphore};
 use tokio::time::{sleep, Duration};
 use tokio::task::JoinHandle;
-use crate::backend::tasker::task::{Task, TaskResult};
+use crate::backend::timer_tasker::task::{Task, TaskResult};
 
 #[derive(Clone)]
 pub struct Scheduler {
@@ -115,8 +115,8 @@ mod tests {
     use super::*;
     use std::collections::HashMap;
     use tokio::sync::mpsc;
-    use crate::backend::tasker::commands::build_cmd_map;
-    use crate::backend::tasker::task::{build_tasks_from_meta, CmdFn, TaskMeta};
+    use crate::backend::timer_tasker::commands::build_cmd_map;
+    use crate::backend::timer_tasker::task::{build_tasks_from_meta, CmdFn, TaskMeta};
 
     #[tokio::test]
     async fn test_scheduler_with_meta_to_task() {
